@@ -1,0 +1,9 @@
+The bench is exempt from the Stop gate, and it has to be.
+
+Everything in here exists to be broken on purpose: two RAF clocks fighting, `will-change`
+left on, a scroll library removed mid-flight, reduced motion forced. Its flags are
+`?twoClocks=1 ?noLenis=1 ?leakWillChange=1 ?reduced=1`.
+
+A quality verdict on a rig built to fail would either be meaningless or would stop the
+rig from doing its job. Measurements taken here belong in
+`skills/tails/references/08-collisions.md`, with the date and the way to reproduce them.

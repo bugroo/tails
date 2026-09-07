@@ -1,0 +1,97 @@
+<!-- Entwurf für das Metropol, Düsseldorf-Bilk. Kein Auftrag, keine Übernahme
+     der Marke: ein Vorschlag, als Vorschlag gekennzeichnet. Alle Angaben
+     stammen von filmkunstkinos.de/kinos/metropol/, gelesen am 07.09.2026.
+     Was dort nicht stand, steht hier auch nicht. -->
+<meta charset="utf-8">
+<title>Metropol Düsseldorf · Programm heute</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Das Programm des Metropol in Düsseldorf-Bilk: was heute läuft, wann es anfängt und wie lang es dauert.">
+<link rel="stylesheet" href="style.css">
+
+<p class="entwurf">Entwurf · unverbindlicher Vorschlag. Dies ist nicht die Website des Metropol.</p>
+
+<header class="kopf">
+  <p class="ort">Düsseldorf&#8202;·&#8202;Bilk</p>
+  <h1>Metropol</h1>
+  <p class="unter">Das älteste noch bestehende Kino der Stadt. Drei Säle, 158 Plätze zusammen.</p>
+  <p class="ruf"><a href="tel:+49211349709">0211 349709</a></p>
+</header>
+
+<!-- A6: the board IS the hero. The visitor came to find out what is on and when. -->
+<section class="tafel" aria-labelledby="heute">
+  <h2 id="heute">Heute, Montag 7. September</h2>
+
+  <article class="lauf">
+    <p class="zeit"><a href="https://booking.cinetixx.de/frontend/index.html?cinemaId=1856872676&amp;showId=3638988439">18:30</a></p>
+    <div class="was">
+      <h3>Ach, diese Lücke, diese entsetzliche Lücke</h3>
+      <p class="daten">Drama, Komödie<span>DE 2025</span><span>137 Minuten</span><span>FSK 6</span><span>15. Woche</span></p>
+      <p class="hinweis">Über 130 Minuten, deshalb 0,50&nbsp;EUR Überlängenzuschlag. Regie: Simon Verhoeven.</p>
+    </div>
+  </article>
+
+  <article class="lauf">
+    <p class="zeit"><a href="https://booking.cinetixx.de/frontend/index.html?cinemaId=1856872676&amp;showId=3638997239">21:15</a></p>
+    <div class="was">
+      <h3>All My Sisters</h3>
+      <p class="daten">Dokumentarfilm<span>AT, FR, DE, IR 2025</span><span>87 Minuten</span><span>FSK 12</span><span>3. Woche</span></p>
+      <p class="hinweis">Kein Zuschlag. Regie: Massoud Bakhshi.</p>
+    </div>
+  </article>
+
+  <article class="lauf">
+    <p class="zeit"><a href="https://booking.cinetixx.de/frontend/index.html?cinemaId=1856872676&amp;showId=3638972585">21:30</a></p>
+    <div class="was">
+      <h3>Das Drama, noch mal auf Anfang</h3>
+      <p class="daten">Drama, Romanze<span>US 2026</span><span>105 Minuten</span><span>FSK 12</span><span>23. Woche</span></p>
+      <p class="hinweis">Kein Zuschlag. Regie: Kristoffer Borgli.</p>
+    </div>
+  </article>
+
+  <p class="luecke">Der Grundpreis fehlt hier, weil er auf der Seite des Kinos nicht im Text steht, sondern erst nachgeladen wird. Er gehört an diese Stelle und wird vom Kino eingetragen.</p>
+</section>
+
+<!-- The moment: the section holds while the projector comes up. -->
+<section class="saal" aria-label="Über das Haus">
+  <div class="saal-fest">
+    <canvas id="beam" aria-hidden="true"></canvas>
+    <div class="saal-text" data-auf-nein>
+      <p class="klein">Brunnenstraße, Bilk</p>
+      <h2>Die anderen sind längst Geschichte.</h2>
+      <p>Residenz, Asta Nielsen, Lichtburg: alle zu. Das Metropol war einmal das Vorstadtkino und ist heute der letzte Veteran unter den Düsseldorfer Filmkunstkinos. Projiziert wird in allen drei Sälen digital.</p>
+    </div>
+  </div>
+</section>
+
+<section class="saele" aria-labelledby="saele-titel">
+  <h2 id="saele-titel">Drei Säle</h2>
+  <ol class="liste">
+    <li data-auf><p class="nr">Saal 1</p><p class="name">Cinerama</p><p class="tech">107 Plätze<span>2K</span><span>7.1 Digitalton</span></p></li>
+    <li data-auf><p class="nr">Saal 2</p><p class="name">Phantom</p><p class="tech">29 Plätze<span>2K</span><span>5.1 Digitalton</span></p></li>
+    <li data-auf><p class="nr">Saal 3</p><p class="name">Souterrain</p><p class="tech">22 Plätze<span>2K</span><span>5.1 Digitalton</span></p></li>
+  </ol>
+  <p class="warnung">Das Metropol ist nicht barrierefrei. Wer darauf angewiesen ist, sollte vorher anrufen: <a href="tel:+49211349709">0211 349709</a>.</p>
+</section>
+
+<section class="preise" aria-labelledby="preise-titel">
+  <h2 id="preise-titel">Zuschlag bei langen Filmen</h2>
+  <table data-auf>
+    <caption>Wird auf den Grundpreis aufgeschlagen.</caption>
+    <tbody>
+      <tr><th scope="row">ab 130 Minuten</th><td>0,50 EUR</td></tr>
+      <tr><th scope="row">ab 140 Minuten</th><td>1,00 EUR</td></tr>
+      <tr><th scope="row">ab 150 Minuten</th><td>1,50 EUR</td></tr>
+      <tr><th scope="row">ab 165 Minuten</th><td>2,00 EUR</td></tr>
+      <tr><th scope="row">ab 180 Minuten</th><td>2,50 EUR</td></tr>
+    </tbody>
+  </table>
+  <p class="hinweis">Neben dem Gilde-Pass gibt es keine weiteren Ermäßigungen.</p>
+</section>
+
+<footer class="fuss" data-auf>
+  <p class="adresse">Brunnenstraße 20<br>40223 Düsseldorf</p>
+  <p><a href="tel:+49211349709">0211 349709</a><br><a href="mailto:metropol@filmkunstkinos.de">metropol@filmkunstkinos.de</a></p>
+  <p class="leitung">Theaterleitung: Delia Imbriani</p>
+</footer>
+
+<script src="beam.js" defer></script>

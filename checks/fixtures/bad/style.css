@@ -1,0 +1,66 @@
+/* The positive control. Every rule in this file is here on purpose: this page
+   exists so the gate can be seen refusing something. If it ever passes, the
+   gate has stopped looking. No stamp — that is one of the failures. */
+
+:root { --paper: #f4f1ea; }
+
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  background: #f4f1ea;
+  color: #111;
+}
+
+.hero {
+  min-height: 100vh;
+  background-image: url(photo.svg);
+  background-size: cover;
+  display: grid;
+  place-items: center;
+}
+
+.hero h1 {
+  font-size: 4.5rem;
+  line-height: 1.4;
+  color: #ffffff;
+  margin: 0;
+  text-align: center;
+}
+
+.hero p { color: #f2f0e6; font-size: 1.25rem; }
+
+.badge {
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: #fff;
+  padding: .5rem 1rem;
+  border-radius: 999px;
+}
+
+.claim {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 3rem;
+}
+
+.card {
+  border-left: 6px solid #6366f1;
+  background: #f4f1ea;
+  padding: 1.5rem;
+  transition: all .3s;
+  will-change: transform;
+}
+
+.wide { width: 1400px; height: 200px; background: #eee; }
+
+.muted { color: #cfcfcf; background: #ffffff; font-size: 1rem; }
+
+h2 { font-style: italic; font-size: 2rem; }
+
+a:focus, button:focus, a:focus-visible, button:focus-visible { outline: none; }
+
+@keyframes pulse { 0% { opacity: 1 } 50% { opacity: .35 } 100% { opacity: 1 } }
+.pulse { animation: pulse 1.4s infinite; background: #ddd; padding: 1rem; }
+
+

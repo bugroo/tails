@@ -1,0 +1,39 @@
+# NOTICE
+
+The code, the skill, the reference files and the checks in this repository are MIT
+licensed. See LICENSE.
+
+**Two things in here are not, and they are not mine to relicense.**
+
+## Typefaces
+
+`samples/*/assets/fonts/*.woff2` are subsets of open-source typefaces distributed under
+the **SIL Open Font License 1.1**, not under the MIT licence of this repository.
+
+| File | Family | Licence |
+|---|---|---|
+| `samples/schnackertz/assets/fonts/fraunces.woff2` | Fraunces | SIL OFL 1.1 |
+| `samples/metropol/assets/fonts/big-shoulders.woff2` | Big Shoulders Display | SIL OFL 1.1 |
+
+The OFL permits redistribution and embedding. It does not permit selling the fonts on
+their own, and it requires that this notice travel with them. Full text:
+<https://openfontlicense.org/>
+
+## Photographs
+
+**No photographs of any business are included in this repository**, and the samples are
+built so that this is visible rather than hidden. The images a sample needs are fetched
+locally by whoever runs it; see `samples/schnackertz/assets/README.md`.
+
+The reason is not caution, it is accuracy. Photographs of a restaurant or a cinema belong
+to that business and to whoever took them. An MIT licence covering them would be a false
+statement about who may reuse them, and this repository is partly about not making
+statements it cannot support.
+
+## The businesses named in the samples
+
+`samples/` contains unsolicited **proposals** for two real businesses, each labelled as a
+proposal on the page itself. Neither commissioned the work, neither endorses it, and
+neither page is presented as their website. Every fact on them was read from the
+business's own public pages on the date recorded in the sample's README, and anything
+that could not be read there is marked as missing rather than filled in.

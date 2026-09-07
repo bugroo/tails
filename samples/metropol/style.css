@@ -1,0 +1,303 @@
+/* tails · form: A6-B4-C2-D5-E4 · density: dense · 2026-09-07 */
+
+/* Metropol Düsseldorf — Entwurf
+   ---------------------------------------------------------------------------
+   THE FORM, and why each axis was taken this way
+
+   A6 Board        The visitor came to find out what is on and when. The board
+                   is the hero. Nothing is placed above it.
+   B4 Dense-open   The task on top, tight. Then the house gets room to breathe.
+   C2 Rule         One hairline, one weight, everywhere. A printed programme
+                   sheet is made of rules and type, and this is one.
+   D5 Absent       No photography. Not a stylistic preference: there are no
+                   film stills anyone has the right to use here, and inventing
+                   an atmosphere with stock imagery is what this skill exists
+                   to prevent.
+   E4 Scrubbed     The house lights come down as you scroll. Scroll position
+                   drives one value, `--k`, and the projector reads the same
+                   number the CSS does.
+
+   Differs from the previous stamp A3-B3-C4-D2-E2 on all five axes.
+
+   THE SURFACE IS WHITE ON PURPOSE
+   A cinema page wants to be black with one acid accent. That is one of the
+   three looks AI-generated design collapses into, and it also throws away the
+   idea: this is the paper programme with the projector light falling across
+   it. The light is the only colour on the page.
+--------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Big Shoulders';
+  src: url('assets/fonts/big-shoulders.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+:root {
+  --tinte: #14161a;
+  --papel: #ffffff;
+  --regla: #cdd0d6;
+  --leise: #5c626c;
+  --licht: #b4520f;            /* tungsten through the gate, only on the time */
+  --k: 0;                      /* the shared value: 0 lights up, 1 lights down */
+  --spalte: min(72rem, 100% - 2.5rem);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinte);
+  font: 400 17px/1.55 ui-sans-serif, "Helvetica Neue", Arial, sans-serif;
+  font-synthesis-weight: none;
+}
+
+h1, h2, h3, .zeit, .nr {
+  font-family: 'Big Shoulders', 'Arial Narrow', ui-sans-serif, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  line-height: 0.9;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+a { color: inherit; }
+
+a:focus-visible {
+  outline: 2px solid var(--licht);
+  outline-offset: 4px;
+  border-radius: 1px;
+}
+
+/* the label that keeps this a proposal and not an impersonation */
+.entwurf {
+  margin: 0;
+  padding: .55rem 1.25rem;
+  background: var(--tinte);
+  color: #ffffff;
+  font-size: .8125rem;
+  letter-spacing: .01em;
+}
+
+/* ── masthead ─────────────────────────────────────────────────────────── */
+.kopf {
+  width: var(--spalte);
+  margin: clamp(2rem, 6vw, 4rem) auto clamp(1.5rem, 4vw, 2.5rem);
+}
+.ort {
+  margin: 0 0 .4rem;
+  font-size: .8125rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--leise);
+}
+.kopf h1 { font-size: clamp(4rem, 19vw, 12rem); letter-spacing: -0.03em; }
+.unter { max-width: 34ch; margin: .9rem 0 0; font-size: 1.0625rem; }
+.ruf { margin: .6rem 0 0; font-size: 1.0625rem; }
+.ruf a { text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+/* ── the board ────────────────────────────────────────────────────────── */
+.tafel { width: var(--spalte); margin: 0 auto; }
+
+.tafel h2 {
+  padding-bottom: .7rem;
+  border-bottom: 1px solid var(--tinte);
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.lauf {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 7rem) 1fr;
+  gap: 0 clamp(1rem, 3vw, 2.5rem);
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--regla);
+}
+
+.zeit { margin: 0; font-size: clamp(2.5rem, 6vw, 3.75rem); line-height: .85; }
+.zeit a {
+  color: var(--licht);
+  text-decoration: none;
+  display: inline-block;
+  padding: .1em .12em .05em 0;
+  transition: transform .18s ease, color .18s ease;
+}
+/* The hover says the word rather than drawing a line: the time moves toward
+   the film it belongs to. Touch has no hover, so nothing is hidden behind it. */
+.zeit a:hover { transform: translateX(.12em); color: #8f3f0a; }
+.zeit a::after {
+  content: 'Karten';
+  display: block;
+  font-family: ui-sans-serif, sans-serif;
+  font-size: .8125rem;
+  font-weight: 400;
+  letter-spacing: .1em;
+  line-height: 1;
+  margin-top: .45rem;
+  color: var(--leise);
+}
+
+.was h3 { font-size: clamp(1.375rem, 3.4vw, 2.125rem); margin-bottom: .5rem; }
+
+.daten {
+  margin: 0;
+  font-size: .875rem;
+  color: var(--leise);
+}
+.daten span::before { content: ' · '; }
+
+.hinweis { margin: .5rem 0 0; font-size: .9375rem; max-width: 52ch; }
+
+.luecke {
+  margin: 1.25rem 0 0;
+  padding: .9rem 1rem;
+  border: 1px dashed var(--regla);
+  font-size: .9375rem;
+  color: var(--leise);
+  max-width: 62ch;
+}
+
+/* ── the moment: the projector comes up while the section holds ───────── */
+.saal { position: relative; height: 230svh; margin-top: clamp(3rem, 8vw, 6rem); }
+
+.saal-fest {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+#beam {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: multiply;
+  opacity: 0;
+  transition: opacity .6s ease;
+}
+.has-beam #beam { opacity: 1; }
+
+/* Without WebGL the light is still there, just not alive. The page never
+   depended on the canvas. */
+.saal-fest::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(58% 46% at 50% 44%,
+    #fffaf2 0%,
+    #fdf6ec calc(38% + var(--k) * 12%),
+    #eef0f5 100%);
+}
+.has-beam .saal-fest::before { display: none; }
+
+/* The type and the light are not on the same plane. As the house lights come
+   down the words drift up against them, which is the whole reason the section
+   holds still: two things moving at different rates inside one pin. Without
+   this the moment is a slab that happens to be sticky. */
+.saal-text {
+  position: relative;
+  width: var(--spalte);
+  max-width: 46rem;
+  text-align: center;
+  transform: translateY(calc(var(--k) * -2.75rem));
+}
+.klein {
+  margin: 0 0 1.4rem;
+  font-size: .8125rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--leise);
+}
+/* Line height under 1 lets the diacritics of a German headline climb out of
+   their own line box. LÄNGST put its umlaut through the eyebrow above it.
+   Nothing in the gate can see this; an eye can, in one second. */
+.saal-text h2 {
+  font-size: clamp(2.25rem, 7.5vw, 5.5rem);
+  line-height: 0.95;
+  /* proportional, not a fixed gap: the umlaut climbs with the type size, so a
+     rem of clearance that works at 40px is gone at 88px */
+  padding-top: 0.22em;
+  /* the line tightens as the lights go down */
+  letter-spacing: calc(-0.02em - var(--k) * 0.012em);
+}
+.saal-text p { margin: 1.4rem auto 0; max-width: 40ch; font-size: 1.0625rem; }
+
+/* ── the rooms ────────────────────────────────────────────────────────── */
+.saele { width: var(--spalte); margin: clamp(3rem, 8vw, 6rem) auto 0; }
+.saele h2 { font-size: clamp(1.75rem, 5vw, 3rem); padding-bottom: .7rem; border-bottom: 1px solid var(--tinte); }
+
+.liste { list-style: none; margin: 0; padding: 0; }
+.liste li {
+  display: grid;
+  grid-template-columns: minmax(4.5rem, 6rem) 1fr auto;
+  align-items: baseline;
+  gap: 0 clamp(1rem, 3vw, 2rem);
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--regla);
+}
+.nr { margin: 0; font-size: 1rem; color: var(--leise); letter-spacing: .06em; }
+.name { margin: 0; font-size: clamp(1.25rem, 3vw, 1.75rem); font-family: 'Big Shoulders', 'Arial Narrow', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; }
+.tech { margin: 0; font-size: .875rem; color: var(--leise); text-align: right; }
+.tech span::before { content: ' · '; }
+
+.warnung {
+  margin: 1.25rem 0 0;
+  padding: .9rem 1rem;
+  border: 1px solid var(--tinte);
+  font-size: .9375rem;
+  max-width: 62ch;
+}
+
+/* ── prices ───────────────────────────────────────────────────────────── */
+.preise { width: var(--spalte); margin: clamp(3rem, 8vw, 6rem) auto 0; }
+.preise h2 { font-size: clamp(1.75rem, 5vw, 3rem); padding-bottom: .7rem; border-bottom: 1px solid var(--tinte); }
+.preise table { width: 100%; max-width: 34rem; border-collapse: collapse; margin-top: .5rem; }
+.preise caption { text-align: left; padding: .8rem 0; font-size: .9375rem; color: var(--leise); }
+.preise th, .preise td { padding: .7rem 0; border-bottom: 1px solid var(--regla); font-weight: 400; text-align: left; }
+.preise td { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ── foot ─────────────────────────────────────────────────────────────── */
+.fuss {
+  width: var(--spalte);
+  margin: clamp(3rem, 8vw, 6rem) auto 0;
+  padding: 1.4rem 0 clamp(3rem, 8vw, 5rem);
+  border-top: 1px solid var(--tinte);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 3rem;
+  font-size: .9375rem;
+}
+.fuss p { margin: 0; }
+.leitung { color: var(--leise); }
+
+/* ── E4, natively: the rows arrive as the scroll uncovers them ────────── */
+@keyframes auf {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+[data-auf] {
+  animation: auf linear both;
+  animation-timeline: view();
+  animation-range: entry 8% cover 30%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-auf] { animation: none; opacity: 1; transform: none; }
+  .zeit a { transition: none; }
+  .saal-text { transform: none; }
+  #beam { display: none; }
+  .has-beam .saal-fest::before { display: block; }
+}
+
+@media (max-width: 34rem) {
+  .lauf { grid-template-columns: 1fr; gap: .6rem; }
+  .zeit a::after { display: inline; margin-left: .6rem; }
+  .liste li { grid-template-columns: 1fr auto; }
+  .nr { grid-column: 1 / -1; }
+  .tech { text-align: left; grid-column: 1 / -1; margin-top: .3rem; }
+}

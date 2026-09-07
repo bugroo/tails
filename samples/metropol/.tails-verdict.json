@@ -1,0 +1,13 @@
+{
+  "verdict": "APPROVED",
+  "at": "2026-09-07T20:28:39.956Z",
+  "url": "http://localhost:4701/",
+  "dir": ".",
+  "tier": "craft",
+  "expect": "Brunnenstraße",
+  "budgetKB": 900,
+  "copyChecked": true,
+  "unmet": [],
+  "fingerprint": "7606cc9f569e1deb2c5c69dad407595af09d8a030b31999ea3fe9a4ec5d5e480",
+  "note": "Written by checks/gate.mjs. The fingerprint covers every html, css and js file under dir. Editing any of them invalidates this verdict on purpose."
+}

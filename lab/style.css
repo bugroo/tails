@@ -1,0 +1,124 @@
+/* tails · form: A3-B3-C1-D5-E4 · density: sparse · 2026-09-07
+   Bench stylesheet. The form stamp is here because the bench follows its own
+   rule: pick a combination, write it down, do not reuse it next time. */
+
+:root {
+  /* White by default. The cream this file used to carry was never decided,
+     it was reached for — the exact failure checks/slop.mjs now catches. */
+  --ink:        #121212;
+  --ink-muted:  #565656;
+  --paper:      #ffffff;
+  --paper-warm: #efefee;
+  --accent:     #1b48d4;
+  --rule:       rgba(18, 18, 18, 0.16);
+
+  --step--1: clamp(0.82rem, 0.79rem + 0.15vw, 0.9rem);
+  --step-0:  clamp(1rem, 0.95rem + 0.25vw, 1.13rem);
+  --step-1:  clamp(1.33rem, 1.2rem + 0.6vw, 1.7rem);
+  --step-4:  clamp(3rem, 1.6rem + 6.4vw, 7.5rem);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: var(--step-0)/1.55 ui-sans-serif, system-ui, -apple-system, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── header ─────────────────────────────────────────────────────────────── */
+.site-head {
+  position: fixed; inset: 0 0 auto 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; padding: 1rem clamp(1rem, 4vw, 3rem);
+  mix-blend-mode: difference; color: #fff;
+}
+.wordmark { font-weight: 700; letter-spacing: -0.02em; text-decoration: none; color: inherit; }
+.wordmark span { opacity: 0.5; margin: 0 0.15em; }
+.site-head nav { display: flex; gap: clamp(0.75rem, 2vw, 1.75rem); }
+.site-head a { color: inherit; text-decoration: none; font-size: var(--step--1); }
+.site-head a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+/* ── hero ───────────────────────────────────────────────────────────────── */
+.hero { position: relative; min-height: 100svh; display: grid; align-items: end; overflow: clip; }
+.hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero-type {
+  position: relative; z-index: 1;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  max-width: 46rem;
+}
+.eyebrow { margin: 0 0 1rem; font-size: var(--step--1); color: var(--ink-muted); }
+.hero-h1 {
+  margin: 0 0 1rem;
+  font-size: var(--step-4);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+}
+/* Per-character spans produced at runtime. Kept out of the flow of the
+   heading's own layout so the split does not change the line breaks. */
+.hero-h1 .ch { display: inline-block; }
+/* will-change NO va aqui: se pone desde JS al empezar la animacion y se quita
+   al acabar. Estatico, mantiene una capa de GPU viva para siempre. Cazado por
+   checks/slop.mjs sobre este mismo fichero el 07-09-2026. */
+.hero-sub { margin: 0 0 2rem; max-width: 34rem; color: var(--ink-muted); }
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  color: var(--ink); text-decoration: none; font-weight: 650;
+  border-bottom: 2px solid var(--accent); padding-bottom: 0.35rem;
+}
+.hero-cta svg { transition: transform 0.3s var(--ease-out); }
+.hero-cta:hover svg { transform: translateX(5px); }
+.hero-cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+
+/* ── probes ─────────────────────────────────────────────────────────────── */
+.probe {
+  display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+  gap: clamp(1rem, 4vw, 4rem);
+  padding: clamp(3rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--rule);
+}
+@media (max-width: 700px) { .probe { grid-template-columns: minmax(0, 1fr); } }
+
+.probe-rail { position: relative; }
+.sticky-label {
+  position: sticky; top: 5rem;
+  margin: 0; font-size: var(--step-1); letter-spacing: -0.02em;
+}
+.probe-body p { max-width: 38rem; }
+code { background: var(--paper-warm); padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.92em; }
+
+.filler { min-height: 60svh; }
+.filler--tall { min-height: 120svh; }
+
+/* PROBE 2 — the transform is the whole point of this block */
+.transformed-parent { transform: translateZ(0); position: relative; }
+.fixed-child {
+  position: fixed; right: clamp(1rem, 4vw, 3rem); top: 6rem;
+  margin: 0; padding: 0.6rem 0.9rem;
+  background: var(--ink); color: var(--paper);
+  font-size: var(--step--1); border-radius: 4px;
+}
+
+.scrub-target { font-size: var(--step-1); max-width: 30rem; }
+
+/* ── HUD ────────────────────────────────────────────────────────────────── */
+.hud {
+  position: fixed; left: 0; bottom: 0; z-index: 20;
+  padding: 0.5rem 0.75rem;
+  font: 11px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: rgba(18,18,18,0.9); color: #ffffff;
+  white-space: pre; pointer-events: none;
+}
+
+/* ── the floor ──────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-h1 .ch { will-change: auto; }
+  .hero-cta svg { transition: none; }
+}

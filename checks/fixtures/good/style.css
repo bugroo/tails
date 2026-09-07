@@ -1,0 +1,86 @@
+/* tails · form: A4-B2-C5-D3-E4 · density: dense · 2026-09-07 */
+
+/* The negative control. A check that only fires on the bad case may be firing
+   on everything, so this page has to be APPROVED — and it earns that with real
+   scroll-linked motion, not by being empty. */
+
+:root {
+  --ink: #111111;
+  --paper: #ffffff;
+  --rule: #d8d8d8;
+  --accent: #1a4fd6;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: ui-sans-serif, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.wrap { max-width: 62rem; margin: 0 auto; padding: 0 1.25rem; }
+
+h1, h2, h3 { letter-spacing: -0.03em; line-height: 0.95; margin: 0 0 .6em; }
+h1 { font-size: clamp(2.4rem, 7vw, 4.5rem); }
+h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); }
+
+a { color: var(--accent); }
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+button {
+  font: inherit;
+  background: var(--ink);
+  color: var(--paper);
+  border: 0;
+  padding: .7rem 1.2rem;
+  transition: background-color .2s ease;
+}
+button:hover { background: var(--accent); }
+
+.intro { min-height: 500px; padding: 4rem 0 3rem; }
+
+/* The stage holds still while the document runs under it — inside its own
+   track, so it lets go afterwards. Without the track it stays over everything
+   below for the rest of the page, and the gate catches that as focus landing
+   underneath a covering layer. */
+.stage-track { height: 180svh; }
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  background: var(--ink);
+  color: var(--paper);
+  display: grid;
+  align-content: center;
+}
+.stage a { color: #9fc0ff; }
+
+.rest { padding: 4rem 0 8rem; }
+
+.row { border-top: 1px solid var(--rule); padding: 1.4rem 0; }
+
+/* Native scroll-driven reveals: off the main thread, no library, and they
+   simply do not run where the feature is missing. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: none; }
+}
+[data-rise] {
+  animation: rise linear both;
+  animation-timeline: view();
+  animation-range: entry 5% cover 32%;
+}
+[data-rise]:hover { will-change: transform, opacity; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-rise] { animation: none; opacity: 1; transform: none; }
+  button { transition: none; }
+}

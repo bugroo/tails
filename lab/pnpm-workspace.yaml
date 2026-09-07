@@ -1,0 +1,6 @@
+minimumReleaseAge: 1440
+trustPolicy: no-downgrade
+trustPolicyIgnoreAfter: 129600
+blockExoticSubdeps: true
+dangerouslyAllowAllBuilds: false
+allowBuilds: {}

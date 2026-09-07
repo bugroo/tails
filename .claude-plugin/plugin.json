@@ -1,0 +1,8 @@
+{
+  "name": "tails",
+  "description": "Design and build web interfaces that do not read as AI-generated. Six phases, a deterministic slop detector, and a single quality gate that returns APPROVED or NOT APPROVED across ten measured parameters. Ships one isolated reviewer, invoked once per finished build.",
+  "version": "0.1.0",
+  "author": { "name": "bugroo" },
+  "homepage": "https://github.com/bugroo/tails",
+  "license": "MIT"
+}

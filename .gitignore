@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.DS_Store
+samples/*/vendor/
+samples/*/assets/*.jpg
+samples/*/assets/*.jpeg
+samples/*/assets/*.png
+samples/*/assets/*.webp
+docs/interno/

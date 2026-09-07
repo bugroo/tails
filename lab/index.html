@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>tails lab — breaking the stack on purpose</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!-- A fixed header. Whether it stays fixed is one of the things under test. -->
+<header class="site-head" id="head">
+  <a class="wordmark" href="#top">tails<span>·</span>lab</a>
+  <nav>
+    <a href="#work">Work</a>
+    <a href="#index">Index</a>
+    <a href="#end">End</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ── THE HERO ──────────────────────────────────────────────────────────
+       Two layers sharing one state, the pattern taken from a real
+       award-winning build:
+         · background = one Three.js scene
+         · foreground = real DOM, so it stays readable and accessible
+       Both driven by a single value so scroll, hover and pointer never fight
+       each other. -->
+  <section class="hero" id="hero">
+    <canvas class="hero-canvas" aria-hidden="true"></canvas>
+    <div class="hero-type">
+      <p class="eyebrow">Bench 01</p>
+      <h1 class="hero-h1" data-split>Designed to break</h1>
+      <p class="hero-sub">
+        Every collision this bench provokes is written down with what actually
+        happened, not with what the documentation says should happen.
+      </p>
+      <a class="hero-cta" href="#work">
+        <span>See the findings</span>
+        <svg width="20" height="12" viewBox="0 0 20 12" aria-hidden="true"><path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── PROBE 1 · sticky ─────────────────────────────────────────────────
+       Sticky is the classic casualty of a smooth-scroll library that moves
+       content with a transform instead of riding the native scroll. -->
+  <section class="probe" id="work">
+    <div class="probe-rail">
+      <h2 class="sticky-label" id="sticky-probe">Sticky probe</h2>
+    </div>
+    <div class="probe-body">
+      <p>This heading is <code>position: sticky</code>. If it drifts, detaches or
+      jumps while the column scrolls past it, smooth scroll is fighting the
+      native scroll.</p>
+      <p>Scroll slowly, then flick hard, then use the keyboard.</p>
+      <div class="filler"></div>
+    </div>
+  </section>
+
+  <!-- ── PROBE 2 · fixed inside a transformed ancestor ────────────────────
+       A transform on an ancestor creates a containing block, so a fixed
+       descendant anchors to it rather than to the viewport. -->
+  <section class="probe probe--transformed" id="index">
+    <div class="transformed-parent">
+      <p class="fixed-child">I claim <code>position: fixed</code></p>
+      <p>My parent carries a <code>transform</code>. If the box above scrolls
+      away with the page instead of staying put, the containing block moved.</p>
+      <div class="filler"></div>
+    </div>
+  </section>
+
+  <!-- ── PROBE 3 · scrubbed reveal, the expensive kind ────────────────────-->
+  <section class="probe" id="end">
+    <h2 data-split>Scrubbed</h2>
+    <p class="scrub-target">Tied to scroll position. The user drives it.</p>
+    <div class="filler filler--tall"></div>
+  </section>
+
+</main>
+
+<div class="hud" id="hud" aria-live="off"></div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>

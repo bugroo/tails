@@ -1,0 +1,313 @@
+/* tails · form: A3-B3-C4-D2-E2 · density: middle · 2026-09-07
+   Unsolicited proposal for Haus Schnackertz.
+
+   Differs from the previous two stamps in this repository:
+     lab       A3-B3-C1-D5-E4 → differs on C, D, E (three axes, the minimum)
+     sample v1 A6-B4-C3-D1-E1 → differs on all five
+
+   Why v1 was thrown away: it was a correct information board and a bad
+   restaurant. A place that sells food showed no food. Density was the right
+   position and it was read as "no images", which is not what density means. */
+
+@font-face {
+  font-family: 'Fraunces';
+  src: url('./assets/fonts/fraunces.woff2') format('woff2-variations');
+  font-weight: 400 800;
+  font-display: swap;
+  font-style: normal;
+}
+/* Self-hosted on purpose. Loading fonts from a third-party CDN sends the
+   visitor's IP address to it, which German courts have treated as a data
+   protection problem (Munich, 2022). For a German business this is not a
+   performance preference, it is a liability one. */
+
+:root {
+  /* White. Nobody asked for a warm surface, so it is not one: see
+     references/05-colour.md § The cream rule. The warmth this place has comes
+     from its own photographs, which is where warmth belongs. */
+  --paper:      #ffffff;
+  --paper-warm: #f0f0ef;      /* a neutral step, not a cream */
+  --ink:        #141414;
+  --ink-muted:  #5a5a58;
+  --wine:       oklch(38% 0.132 28);
+  --open:       oklch(46% 0.135 145);
+  --rule:       oklch(8% 0 0 / 0.14);
+
+  --t-small: 0.88rem;
+  --t-body:  1.0625rem;
+  --t-mid:   clamp(1.3rem, 1rem + 1.4vw, 1.85rem);
+  --t-big:   clamp(2.8rem, 1.2rem + 6.6vw, 6rem);
+
+  --pad: clamp(1.25rem, 5vw, 5rem);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: var(--t-body)/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--wine); outline-offset: 3px; }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+.proposal {
+  margin: 0; padding: 0.55rem var(--pad);
+  background: var(--ink); color: var(--paper);
+  font-size: var(--t-small); line-height: 1.4;
+}
+
+/* ── top ────────────────────────────────────────────────────────────────── */
+.top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem 1.5rem; flex-wrap: wrap;
+  padding: 1rem var(--pad);
+}
+.mark {
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 700; font-size: 1.35rem; line-height: 1.05;
+  letter-spacing: -0.02em; text-decoration: none;
+}
+.mark span {
+  display: block; font-family: system-ui, sans-serif; font-weight: 400;
+  font-size: var(--t-small); color: var(--ink-muted); letter-spacing: 0;
+  margin-top: 0.15rem;
+}
+.top-right { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.status {
+  margin: 0; display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: var(--t-small); color: var(--ink-muted);
+}
+.dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--ink-muted); flex: none;
+}
+.status.is-open { color: var(--open); font-weight: 600; }
+.status.is-open .dot { background: var(--open); }
+.call {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  min-height: 44px; padding: 0.6rem 1.05rem;
+  background: var(--wine); color: var(--paper);
+  border-radius: 2px; text-decoration: none;
+  font-weight: 600; font-variant-numeric: tabular-nums;
+}
+.call svg { flex: none; }
+
+/* ── the moment ─────────────────────────────────────────────────────────────
+   The frame goes from the full viewport to a fixed shape, driven by one
+   custom property `--k` that the scrub animates from 1 to 0. Registering it
+   with @property makes it interpolable and keeps the work on the compositor:
+   every value below is derived from --k, so the image and the type can never
+   disagree about where they are in the transition. */
+@property --k {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
+.stage {
+  --k: 1;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  overflow: clip;
+}
+.stage-frame {
+  width: calc(100% - (1 - var(--k)) * clamp(2.5rem, 10vw, 10rem));
+  height: calc(46svh + var(--k) * 34svh);
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: calc((1 - var(--k)) * 3px);
+}
+.stage-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 55%;
+  transform: scale(calc(1 + var(--k) * 0.06));
+}
+.is-static .stage-frame { width: 100%; height: 56svh; }
+.is-static .stage-img { transform: none; }
+
+.hero-type {
+  visibility: hidden;
+  padding: clamp(1.5rem, 3.5vw, 2.75rem) var(--pad) clamp(1.25rem, 3vw, 2rem);
+  display: grid; gap: 0.4rem clamp(1.5rem, 4vw, 3rem);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: end;
+}
+.is-static .hero-type { visibility: visible; }
+@media (min-width: 820px) {
+  .hero-type { grid-template-columns: minmax(0, auto) minmax(0, 1fr); }
+  .hero-type h1 { grid-row: span 2; }
+}
+.hero-type h1 {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-size: var(--t-big);
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: -0.038em;
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
+  text-wrap: balance;
+}
+.hero-type h1 .ln { overflow: hidden; }   /* the words rise from behind their own line */
+.hero-sub { margin: 0; align-self: end; color: var(--ink-muted); max-width: 30ch; }
+.hero-price {
+  margin: 0; align-self: start;
+  font-family: Fraunces, Georgia, serif;
+  font-size: var(--t-mid); font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── C4 · the band overlaps the photo above it ──────────────────────────── */
+.band { background: var(--paper); }
+.band-in {
+  margin: 0 var(--pad);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--paper-warm);
+  position: relative;
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: 1rem 2rem;
+}
+.band-line {
+  margin: 0; font-family: Fraunces, Georgia, serif;
+  font-size: var(--t-mid); line-height: 1.15;
+  letter-spacing: -0.022em; max-width: 24ch;
+}
+.band-acts { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; min-height: 46px;
+  padding: 0.7rem 1.25rem; border-radius: 2px;
+  text-decoration: none; font-weight: 600;
+  background: var(--paper); color: var(--ink);
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+.btn:hover { background: color-mix(in oklab, var(--paper) 86%, var(--ink)); }
+.btn--first { background: var(--ink); color: var(--paper); }
+.btn--first:hover { background: var(--wine); }
+
+/* ── B3 · a long quiet stretch ──────────────────────────────────────────── */
+.story {
+  display: grid; gap: clamp(1.5rem, 4vw, 3.5rem);
+  grid-template-columns: minmax(0, 1fr);
+  padding: clamp(3rem, 8vw, 6rem) var(--pad) clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+@media (min-width: 900px) { .story { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); } }
+.story-text { max-width: 46ch; }
+.story-text h2 {
+  margin: 0 0 1rem;
+  font-family: Fraunces, Georgia, serif;
+  font-size: var(--t-mid); font-weight: 600;
+  line-height: 1.12; letter-spacing: -0.024em;
+  text-wrap: balance;
+}
+.story-text p { margin: 0 0 1rem; text-wrap: pretty; }
+.story-new { color: var(--ink-muted); font-size: var(--t-small); }
+.story-new strong { color: var(--ink); }
+.story-fig { margin: 0; }
+.story-fig img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+
+/* D2 · bled */
+.team { position: relative; margin-top: clamp(1rem, 3vw, 2rem); }
+.team-img { width: 100%; height: clamp(18rem, 52svh, 32rem); object-fit: cover; object-position: center 32%; }
+.team-cap {
+  margin: 0; padding: 0.7rem var(--pad);
+  background: var(--ink); color: var(--paper);
+  font-size: var(--t-small);
+}
+
+/* ── wann und wo ────────────────────────────────────────────────────────── */
+.visit { padding: clamp(3rem, 8vw, 6rem) var(--pad); background: var(--paper-warm); }
+.visit-h {
+  margin: 0 0 clamp(1.25rem, 3vw, 2rem);
+  font-family: Fraunces, Georgia, serif;
+  font-size: var(--t-mid); font-weight: 600; letter-spacing: -0.024em;
+}
+.visit-grid {
+  display: grid; gap: clamp(1.5rem, 4vw, 3rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  align-items: start;
+}
+.hours { width: 100%; border-collapse: collapse; font-size: var(--t-small); }
+.hours th, .hours td {
+  text-align: left; padding: 0.65rem 0; vertical-align: top;
+  border-bottom: 1px solid var(--rule);
+}
+.hours th { font-weight: 600; padding-right: 1.25rem; }
+.hours td { font-variant-numeric: tabular-nums; }
+.note { display: block; color: var(--ink-muted); font-size: 0.85em; }
+.where-addr {
+  margin: 0 0 0.9rem;
+  font-family: Fraunces, Georgia, serif;
+  font-size: var(--t-body); line-height: 1.35;
+}
+.where-links { margin: 0; line-height: 2; font-size: var(--t-small); }
+
+/* ── foot ───────────────────────────────────────────────────────────────── */
+.foot {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; justify-content: space-between;
+  padding: 1.5rem var(--pad);
+  background: var(--ink); color: var(--paper);
+  font-size: var(--t-small);
+}
+.foot p { margin: 0; }
+
+/* ── E2 · settle. Short, and off when asked. ────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-type, .band-in, .story-text, .story-fig {
+    animation: settle 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .band-in  { animation-delay: 0.06s; }
+  .story-text, .story-fig { animation-delay: 0.1s; }
+  @keyframes settle {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+}
+
+/* ── the menu, read sideways ────────────────────────────────────────────── */
+.rail { overflow: hidden; background: var(--ink); color: var(--paper); }
+.rail-track {
+  display: flex; align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding: clamp(2.5rem, 6vw, 5rem) var(--pad);
+  min-height: 100svh;
+}
+/* will-change goes on from JS while the rail is actually pinned and comes off
+   after — static, it holds a GPU layer for the life of the page. */
+.rail-track.is-running { will-change: transform; }
+.rail-lead { flex: 0 0 min(30rem, 78vw); }
+.rail-lead h2 {
+  margin: 0 0 1rem;
+  font-family: Fraunces, Georgia, serif;
+  font-size: clamp(2.4rem, 1.2rem + 4.4vw, 4.5rem);
+  font-weight: 700; line-height: 0.88; letter-spacing: -0.035em;
+}
+.rail-lead p { margin: 0 0 1.5rem; color: oklch(84% 0 0); max-width: 34ch; }
+.rail-lead .btn { background: var(--paper); color: var(--ink); }
+.rail-lead .btn:hover { background: var(--wine); color: var(--paper); }
+.plate { flex: 0 0 min(26rem, 72vw); margin: 0; }
+.plate img {
+  width: 100%; aspect-ratio: 3 / 2; object-fit: cover;
+  border-radius: 2px;
+}
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  /* No sideways scroll where the browser owns that gesture. */
+  .rail { overflow: visible; }
+  .rail-track {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    min-height: 0; will-change: auto;
+  }
+  .rail-lead { flex: none; grid-column: 1 / -1; }
+  .plate { flex: none; }
+}

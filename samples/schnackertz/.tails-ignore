@@ -1,0 +1,9 @@
+This sample is deliberately left NOT APPROVED and exempt from the Stop gate.
+
+It weighs 1 187 KB against the 500 KB this skill recommends for a local business, and
+that is kept on the record rather than fixed: it is the collision between "a restaurant
+page needs its food on screen" and "their customers are on mobile data", and both halves
+are true. See its README.
+
+Exempting it here is not a way around the gate. The gate has been run on it, it failed,
+and the failure is written down.
