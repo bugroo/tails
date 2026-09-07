@@ -30,6 +30,14 @@ fi
 RAIZ="${CLAUDE_PROJECT_DIR:-$PWD}"
 [ -d "$RAIZ" ] || exit 0
 
+# Where this plugin actually lives, so the instruction below names a path that
+# exists on the machine reading it. Installed from a marketplace the checks sit
+# in the plugin cache, not in the user's project, and "run node checks/gate.mjs"
+# is then an instruction to run something that is not there.
+AQUI="${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+PUERTA="$AQUI/checks/gate.mjs"
+[ -f "$PUERTA" ] || PUERTA="checks/gate.mjs"
+
 # 1 · is this a tails project at all?
 # `fixtures` is skipped by name: a stamped stylesheet whose whole job is to be
 # judged by a test would otherwise block every session in this repository, and
@@ -115,7 +123,8 @@ done <<< "$MAPA"
   echo ""
   echo "Run the gate and let it decide:"
   echo ""
-  echo "  node checks/gate.mjs <url> --dir=<source> --tier=craft|standard|utility \\"
+  echo "  node $PUERTA \\"
+  echo "       <url> --dir=<source> --tier=craft|standard|utility \\"
   echo "       --budget=<KB> --expect=<text only this page contains> --copy-checked"
   echo ""
   echo "  --expect      a marker only the intended page contains. Without it a local"

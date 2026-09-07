@@ -64,6 +64,10 @@ Everything below exists to keep you off the mean. Three mechanisms do the work:
    node checks/gate.mjs <url> --dir=<source> --tier=<tier> --budget=<KB> --copy-checked
    ```
 
+   Installed as a plugin the checks live in the plugin directory, not in the project
+   being built, so the path is `${CLAUDE_PLUGIN_ROOT}/checks/gate.mjs`. Run
+   `/tails-verdict`, which resolves it for you.
+
    Ten parameters, one verdict, three exit codes: `0` approved, `1` **NOT APPROVED**, `2`
    **could not look**. NOT APPROVED is not a list of suggestions and it does not become a
    caveat in the handoff: it means the work is unfinished and the next step is to fix what
