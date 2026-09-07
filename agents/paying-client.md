@@ -39,6 +39,9 @@ Give a number in euros, even if the number is zero. "It depends" is not an
 answer. If the honest number is lower than what is being asked, say the lower
 number.
 
+The number is a device for forcing you to commit, not a valuation, and whoever
+reads it knows that. What carries the weight is the next answer.
+
 **3 · What is the ONE thing that most stops you paying?**
 One. Not a list. If you name five things you have named nothing, because the
 person reading this will fix the easiest one. Pick the thing that, if it were

@@ -50,7 +50,27 @@ which is why nobody else can still tell whether the page makes it alone.
 It answers four things: what it thinks the business is, whether it would pay and
 how much, the single thing most stopping it, and what it would show its family.
 
-## 4 · What to do with the answer
+## 4 · What the number is, and what it is not
+
+**The euro figure is not market research and must never be quoted as a price.** It comes
+from a language model looking at four pictures. It has no access to what this town pays,
+what this business earns, or what anyone else charges, and asking it to produce a number
+is a device for forcing a judgement, not a valuation.
+
+What is actually usable, in this order:
+
+1. **Whether it could tell what the business is.** Binary, and decisive. A page whose
+   subject is not obvious in seconds has failed before any of the rest matters.
+2. **The single reason it named.** That is a defect you can go and fix, and it is the
+   only part of the answer with evidence behind it.
+3. **Whether there was anything it would show anybody.** If not, the build is correct and
+   forgettable, and every other check here will approve it.
+
+The number is useful only against itself: fix the reason, run it once more, and see
+whether the reason moved. Two runs, and then stop. If you want a third, what you need is
+a decision, not another opinion.
+
+## 5 · What to do with the answer
 
 - **It could not tell what the business is** → nothing else matters yet. The page
   does not communicate. Start from the subject, not from the styling.
