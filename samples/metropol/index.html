@@ -22,6 +22,7 @@
   <h2 id="heute">Heute, Montag 7. September</h2>
 
   <article class="lauf">
+    <img class="plakat" src="assets/p-luecke.jpg" srcset="assets/p-luecke-360.jpg 360w, assets/p-luecke.jpg 537w" sizes="(max-width: 34rem) 26vw, 116px" width="537" height="760" alt="Filmplakat: Ach, diese Lücke, diese entsetzliche Lücke" loading="lazy" decoding="async">
     <p class="zeit"><a href="https://booking.cinetixx.de/frontend/index.html?cinemaId=1856872676&amp;showId=3638988439">18:30</a></p>
     <div class="was">
       <h3>Ach, diese Lücke, diese entsetzliche Lücke</h3>
@@ -31,6 +32,7 @@
   </article>
 
   <article class="lauf">
+    <img class="plakat" src="assets/p-sisters.jpg" width="538" height="760" sizes="(max-width: 34rem) 26vw, 116px" alt="Filmplakat: All My Sisters" loading="lazy" decoding="async">
     <p class="zeit"><a href="https://booking.cinetixx.de/frontend/index.html?cinemaId=1856872676&amp;showId=3638997239">21:15</a></p>
     <div class="was">
       <h3>All My Sisters</h3>
@@ -40,6 +42,7 @@
   </article>
 
   <article class="lauf">
+    <img class="plakat" src="assets/p-drama.jpg" srcset="assets/p-drama-360.jpg 360w, assets/p-drama.jpg 537w" sizes="(max-width: 34rem) 26vw, 116px" width="537" height="760" alt="Filmplakat: Das Drama, noch mal auf Anfang" loading="lazy" decoding="async">
     <p class="zeit"><a href="https://booking.cinetixx.de/frontend/index.html?cinemaId=1856872676&amp;showId=3638972585">21:30</a></p>
     <div class="was">
       <h3>Das Drama, noch mal auf Anfang</h3>
@@ -52,24 +55,36 @@
 </section>
 
 <!-- The moment: the section holds while the projector comes up. -->
-<section class="saal" aria-label="Über das Haus">
+<section class="saal" aria-label="Der Saal Cinerama">
   <div class="saal-fest">
+    <img class="saal-foto" src="assets/saal-1.jpg" srcset="assets/saal-1-800.jpg 800w, assets/saal-1.jpg 1600w" sizes="100vw" width="1600" height="1069" alt="Blick von den hinteren Reihen des Saals Cinerama auf die Leinwand, rote Klappsitze im Dunkeln" fetchpriority="high" decoding="async">
     <canvas id="beam" aria-hidden="true"></canvas>
-    <div class="saal-text" data-auf-nein>
-      <p class="klein">Brunnenstraße, Bilk</p>
-      <h2>Die anderen sind längst Geschichte.</h2>
-      <p>Residenz, Asta Nielsen, Lichtburg: alle zu. Das Metropol war einmal das Vorstadtkino und ist heute der letzte Veteran unter den Düsseldorfer Filmkunstkinos. Projiziert wird in allen drei Sälen digital.</p>
-    </div>
+  </div>
+</section>
+
+<section class="nach-saal">
+  <div class="saal-text">
+    <p class="klein">Saal 1 · Cinerama · 107 Plätze</p>
+    <h2>Die anderen sind längst Geschichte.</h2>
+    <p>Residenz, Asta Nielsen, Lichtburg: alle zu. Das Metropol war einmal das Vorstadtkino und ist heute der letzte Veteran unter den Düsseldorfer Filmkunstkinos.</p>
   </div>
 </section>
 
 <section class="saele" aria-labelledby="saele-titel">
   <h2 id="saele-titel">Drei Säle</h2>
   <ol class="liste">
-    <li data-auf><p class="nr">Saal 1</p><p class="name">Cinerama</p><p class="tech">107 Plätze<span>2K</span><span>7.1 Digitalton</span></p></li>
-    <li data-auf><p class="nr">Saal 2</p><p class="name">Phantom</p><p class="tech">29 Plätze<span>2K</span><span>5.1 Digitalton</span></p></li>
-    <li data-auf><p class="nr">Saal 3</p><p class="name">Souterrain</p><p class="tech">22 Plätze<span>2K</span><span>5.1 Digitalton</span></p></li>
+    <li data-auf>
+      <p class="nr">Saal 2</p><p class="name">Phantom</p>
+      <p class="tech">29 Plätze<span>2K</span><span>5.1 Digitalton</span></p>
+      <img src="assets/saal-2.jpg" width="760" height="508" sizes="(max-width: 48rem) 92vw, 34rem" alt="Saal Phantom, 29 Plätze" loading="lazy" decoding="async">
+    </li>
+    <li data-auf>
+      <p class="nr">Saal 3</p><p class="name">Souterrain</p>
+      <p class="tech">22 Plätze<span>2K</span><span>5.1 Digitalton</span></p>
+      <img src="assets/saal-3.jpg" width="760" height="508" sizes="(max-width: 48rem) 92vw, 34rem" alt="Saal Souterrain, 22 Plätze" loading="lazy" decoding="async">
+    </li>
   </ol>
+  <p class="hinweis">Saal 1, das Cinerama mit 107 Plätzen, ist oben zu sehen.</p>
   <p class="warnung">Das Metropol ist nicht barrierefrei. Wer darauf angewiesen ist, sollte vorher anrufen: <a href="tel:+49211349709">0211 349709</a>.</p>
 </section>
 
@@ -92,6 +107,7 @@
   <p class="adresse">Brunnenstraße 20<br>40223 Düsseldorf</p>
   <p><a href="tel:+49211349709">0211 349709</a><br><a href="mailto:metropol@filmkunstkinos.de">metropol@filmkunstkinos.de</a></p>
   <p class="leitung">Theaterleitung: Delia Imbriani</p>
+  <p class="bild">Saalfotos: F. Kiefer, Mai 2025. Plakate: die jeweiligen Verleiher. Alle Bilder stammen von der Seite des Kinos und gehören nicht zu diesem Entwurf.</p>
 </footer>
 
 <script src="beam.js" defer></script>

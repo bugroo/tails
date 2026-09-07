@@ -1,4 +1,4 @@
-/* tails · form: A6-B4-C2-D5-E4 · density: dense · 2026-09-07 */
+/* tails · form: A6-B4-C2-D2-E4 · density: dense · 2026-09-07 */
 
 /* Metropol Düsseldorf — Entwurf
    ---------------------------------------------------------------------------
@@ -9,21 +9,30 @@
    B4 Dense-open   The task on top, tight. Then the house gets room to breathe.
    C2 Rule         One hairline, one weight, everywhere. A printed programme
                    sheet is made of rules and type, and this is one.
-   D5 Absent       No photography. Not a stylistic preference: there are no
-                   film stills anyone has the right to use here, and inventing
-                   an atmosphere with stock imagery is what this skill exists
-                   to prevent.
+   D2 Bled         The auditorium, edge to edge, as the moment. The first
+                   version of this page had no photography at all, justified by
+                   not owning any film stills. That was a rights constraint
+                   deciding the design, which is the wrong order: the cinema
+                   publishes photographs of its own rooms and the distributors'
+                   posters, and a cinema page with no cinema in it is worth
+                   nothing to the person paying. Nothing here is stock and
+                   nothing here is generated.
    E4 Scrubbed     The house lights come down as you scroll. Scroll position
                    drives one value, `--k`, and the projector reads the same
                    number the CSS does.
 
    Differs from the previous stamp A3-B3-C4-D2-E2 on all five axes.
 
-   THE SURFACE IS WHITE ON PURPOSE
-   A cinema page wants to be black with one acid accent. That is one of the
-   three looks AI-generated design collapses into, and it also throws away the
-   idea: this is the paper programme with the projector light falling across
-   it. The light is the only colour on the page.
+   THE SURFACE IS WHITE, THE ROOM IS DARK
+   A cinema page wants to be black with one acid accent, which is one of the
+   three looks AI-generated design collapses into. So the page is the printed
+   programme sheet, white, and the darkness is the actual room, arriving once,
+   full bleed, where it means something.
+
+   THE COLOUR IS NOT CHOSEN, IT IS SAMPLED
+   `--rot` is the seat velvet, read off the photograph itself at #bf3835:
+   5,48:1 on white, which clears 4,5:1 for body text. The dark surface is the
+   wall of the same room. Nothing in this palette was picked from taste.
 --------------------------------------------------------------------------- */
 
 @font-face {
@@ -34,11 +43,12 @@
 }
 
 :root {
-  --tinte: #14161a;
+  --tinte: #17100f;            /* the wall of the room, darkened */
   --papel: #ffffff;
-  --regla: #cdd0d6;
-  --leise: #5c626c;
-  --licht: #b4520f;            /* tungsten through the gate, only on the time */
+  --regla: #d5d0cd;
+  --leise: #5f5652;
+  --rot:   #bf3835;            /* sampled: the seat velvet, 5,48:1 on white */
+  --saal:  #120c0c;            /* the room with the lights down */
   --k: 0;                      /* the shared value: 0 lights up, 1 lights down */
   --spalte: min(72rem, 100% - 2.5rem);
 }
@@ -67,7 +77,7 @@ h1, h2, h3, .zeit, .nr {
 a { color: inherit; }
 
 a:focus-visible {
-  outline: 2px solid var(--licht);
+  outline: 2px solid var(--rot);
   outline-offset: 4px;
   border-radius: 1px;
 }
@@ -110,15 +120,25 @@ a:focus-visible {
 
 .lauf {
   display: grid;
-  grid-template-columns: minmax(5.5rem, 7rem) 1fr;
-  gap: 0 clamp(1rem, 3vw, 2.5rem);
+  grid-template-columns: 116px minmax(5.5rem, 7rem) 1fr;
+  gap: 0 clamp(1rem, 2.5vw, 2rem);
   padding: 1.35rem 0;
   border-bottom: 1px solid var(--regla);
+  align-items: start;
+}
+
+/* The poster is the film's own face. It is not decoration and it is not mine:
+   it comes from the distributor, by way of the cinema's own page. */
+.plakat {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #efeceb;
 }
 
 .zeit { margin: 0; font-size: clamp(2.5rem, 6vw, 3.75rem); line-height: .85; }
 .zeit a {
-  color: var(--licht);
+  color: var(--rot);
   text-decoration: none;
   display: inline-block;
   padding: .1em .12em .05em 0;
@@ -126,7 +146,7 @@ a:focus-visible {
 }
 /* The hover says the word rather than drawing a line: the time moves toward
    the film it belongs to. Touch has no hover, so nothing is hidden behind it. */
-.zeit a:hover { transform: translateX(.12em); color: #8f3f0a; }
+.zeit a:hover { transform: translateX(.12em); color: #8e2724; }
 .zeit a::after {
   content: 'Karten';
   display: block;
@@ -171,41 +191,71 @@ a:focus-visible {
   overflow: hidden;
 }
 
+.saal-fest { background: var(--saal); }
+
+.saal-foto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* The room and the frame are not the same plane: the photograph drifts
+     against the section that holds it, which is what reads as depth. Scaled
+     just past full so the drift never uncovers an edge. */
+  /* 8% of the frame, not two per cent. The first attempt drifted seven pixels
+     across the whole section: invisible to a reader and below the resolution
+     of the check that measures depth. Scaled to 1.2 so ten per cent of overrun
+     on each side always covers the eight per cent of travel. */
+  transform: scale(1.2) translateY(calc(var(--k) * -8%));
+  /* the house lights come down as you scroll, on the photograph itself */
+  filter: brightness(calc(1 - var(--k) * 0.34));
+}
+
 #beam {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  mix-blend-mode: multiply;
+  mix-blend-mode: screen;      /* black adds nothing: the photograph keeps itself */
   opacity: 0;
   transition: opacity .6s ease;
+  pointer-events: none;
 }
 .has-beam #beam { opacity: 1; }
 
-/* Without WebGL the light is still there, just not alive. The page never
-   depended on the canvas. */
-.saal-fest::before {
+/* Without WebGL the beam is a gradient instead of a shader. The page never
+   depended on the canvas, and the photograph carries it either way. */
+.saal-fest::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(58% 46% at 50% 44%,
-    #fffaf2 0%,
-    #fdf6ec calc(38% + var(--k) * 12%),
-    #eef0f5 100%);
+  pointer-events: none;
+  background: radial-gradient(46% 38% at 50% 40%,
+    rgba(255, 225, 180, calc(0.10 + var(--k) * 0.30)) 0%,
+    rgba(255, 225, 180, 0) 70%);
 }
-.has-beam .saal-fest::before { display: none; }
+.has-beam .saal-fest::after { display: none; }
 
 /* The type and the light are not on the same plane. As the house lights come
    down the words drift up against them, which is the whole reason the section
    holds still: two things moving at different rates inside one pin. Without
    this the moment is a slab that happens to be sticky. */
-.saal-text {
-  position: relative;
+/* THE TYPE CAME OFF THE PHOTOGRAPH, and that was measured, not felt.
+   White words sitting over the auditorium read 1,00:1 and 1,09:1 against the
+   composited pixels, because the beam this page is so pleased with was
+   brightening the exact area under them. The reflex is a darker scrim. That
+   flattens the photograph, which is the argument of the section, and it buys a
+   number rather than a page. So the room keeps all of itself, full bleed, and
+   the words land underneath on paper at 16:1 with no shadow at all. */
+.nach-saal {
   width: var(--spalte);
-  max-width: 46rem;
-  text-align: center;
-  transform: translateY(calc(var(--k) * -2.75rem));
+  margin: clamp(3rem, 8vw, 5rem) auto 0;
 }
+.saal-text {
+  max-width: 46rem;
+  transform: translateY(calc(var(--k) * -1.25rem));
+}
+.saal-text .klein { color: var(--leise); }
 .klein {
   margin: 0 0 1.4rem;
   font-size: .8125rem;
@@ -237,8 +287,17 @@ a:focus-visible {
   grid-template-columns: minmax(4.5rem, 6rem) 1fr auto;
   align-items: baseline;
   gap: 0 clamp(1rem, 3vw, 2rem);
-  padding: 1.1rem 0;
+  padding: 1.1rem 0 1.6rem;
   border-bottom: 1px solid var(--regla);
+}
+.liste img {
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: 34rem;
+  height: auto;
+  display: block;
+  margin-top: 1rem;
+  background: #efeceb;
 }
 .nr { margin: 0; font-size: 1rem; color: var(--leise); letter-spacing: .06em; }
 .name { margin: 0; font-size: clamp(1.25rem, 3vw, 1.75rem); font-family: 'Big Shoulders', 'Arial Narrow', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; }
@@ -274,6 +333,7 @@ a:focus-visible {
 }
 .fuss p { margin: 0; }
 .leitung { color: var(--leise); }
+.bild { color: var(--leise); font-size: .8125rem; max-width: 46ch; }
 
 /* ── E4, natively: the rows arrive as the scroll uncovers them ────────── */
 @keyframes auf {
@@ -290,12 +350,14 @@ a:focus-visible {
   [data-auf] { animation: none; opacity: 1; transform: none; }
   .zeit a { transition: none; }
   .saal-text { transform: none; }
+  .saal-foto { filter: none; transform: scale(1.2); }
   #beam { display: none; }
-  .has-beam .saal-fest::before { display: block; }
+  .has-beam .saal-fest::after { display: block; }
 }
 
 @media (max-width: 34rem) {
-  .lauf { grid-template-columns: 1fr; gap: .6rem; }
+  .lauf { grid-template-columns: 26vw 1fr; gap: .5rem 1rem; }
+  .lauf .was { grid-column: 1 / -1; }
   .zeit a::after { display: inline; margin-left: .6rem; }
   .liste li { grid-template-columns: 1fr auto; }
   .nr { grid-column: 1 / -1; }

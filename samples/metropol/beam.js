@@ -10,9 +10,14 @@
 // phone in Europe in 2026. See references/08-collisions.md § 11.1.
 //
 // WHAT IT DRAWS
-// Warm projector light falling across a printed programme sheet, with the
-// grain and the slow gate weave of a real projector. It multiplies over white
-// paper, so the page stays a sheet of paper and never becomes a dark hero.
+// The projector coming up in the room behind the type: a warm halo growing out
+// of the screen in the photograph, the slow gate weave a real projector has,
+// and dust visible only inside the beam. It is blended with `screen`, so black
+// adds nothing and the photograph keeps itself.
+//
+// The first version of this drew the same light over white paper. It was
+// technically real and visually invisible: on an ordinary screen it looked
+// like a beige background. Light needs something to fall on.
 //
 // ONE SHARED VALUE
 // Scroll, pointer and idle all write into the same `k`. That is why the
@@ -29,39 +34,46 @@ const FRAG = `#version 300 es
 precision mediump float;
 uniform vec2  u_res;
 uniform float u_t;      // seconds
-uniform float u_k;      // 0 at rest, 1 with the house lights down
+uniform float u_k;      // 0 house lights up, 1 house lights down
 uniform vec2  u_ptr;    // -1..1, where the eye is
 out vec4 color;
 
-// value noise, cheap enough for an old GPU
 float hash(vec2 v){ return fract(sin(dot(v, vec2(12.9898, 78.233))) * 43758.5453); }
 
 void main(){
   vec2 uv = gl_FragCoord.xy / u_res;
-  vec2 c  = uv - 0.5 - u_ptr * 0.045;
+
+  // The screen sits at roughly this point in the photograph behind us. The
+  // glow grows from there, which is what a projector actually does: the light
+  // arrives from the screen, not from the ceiling.
+  vec2 pantalla = vec2(0.505, 0.60) + u_ptr * 0.012;
+  vec2 c = uv - pantalla;
   c.x *= u_res.x / u_res.y;
 
-  // the beam narrows and warms as you go down: the house lights coming down
-  float ancho = mix(1.05, 0.62, u_k);
-  float caida = smoothstep(ancho, ancho * 0.18, length(c));
-
   // gate weave: a real projector never holds the frame perfectly still
-  float tejido = sin(u_t * 2.1) * 0.0035 + sin(u_t * 5.7) * 0.0016;
-  caida *= 1.0 + tejido;
+  float tejido = sin(u_t * 2.1) * 0.004 + sin(u_t * 5.7) * 0.0018;
 
-  // film grain, stronger where the light is
+  float d = length(c * vec2(1.0, 1.35));
+
+  // A beam in a dark room has an edge. The first version washed the whole
+  // frame at 0.22 and the photograph came out looking like fog: the blacks
+  // lifted, the seats lost their shape, and the screen stopped being the
+  // brightest thing in the picture, which is the one job it has.
+  float halo = smoothstep(mix(0.34, 0.52, u_k), 0.03, d) * (1.0 + tejido);
+  float sala = smoothstep(1.1, 0.15, d) * 0.055;
+
+  float fuerza = mix(0.08, 1.0, u_k);
+  vec3 tungsteno = vec3(1.000, 0.882, 0.706);
+  vec3 luz = tungsteno * (halo * 0.62 + sala) * fuerza;
+
+  // dust in the beam, only where there is beam to be seen in
   float grano = (hash(gl_FragCoord.xy + fract(u_t) * 137.0) - 0.5);
-  grano *= mix(0.020, 0.055, u_k) * (0.35 + caida);
+  luz += grano * (halo * 0.085 + 0.010) * fuerza;
 
-  // tungsten: warm in the centre, cooler at the edges. Never below 0.86, so
-  // black type over this stays far above 4.5:1 — the gate measures it.
-  vec3 calido = vec3(1.000, 0.972, 0.925);
-  vec3 frio   = vec3(0.949, 0.957, 0.984);
-  vec3 luz    = mix(frio, calido, caida);
-  float sombra = mix(1.0, 0.905, (1.0 - caida) * mix(0.35, 1.0, u_k));
-
-  color = vec4(clamp(luz * sombra + grano, 0.86, 1.0), 1.0);
+  // screen blend: black adds nothing, so the photograph keeps itself
+  color = vec4(max(luz, 0.0), 1.0);
 }`;
+
 
 let gl = null, prog = null, raf = 0, uni = {};
 let k = 0, kObjetivo = 0, ptr = [0, 0], vivo = false;
