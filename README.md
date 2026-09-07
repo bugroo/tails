@@ -64,7 +64,18 @@ Three mechanisms, not three opinions:
 ## Install
 
 **As a plugin**, which is the whole thing: the skill, the checks, the single quality
-gate, and the one reviewer.
+gate, the one reviewer, and the hook that enforces them.
+
+```
+/plugin marketplace add bugroo/tails
+/plugin install tails@tails
+```
+
+The repository is its own marketplace, so those two lines are the whole installation.
+
+Node 18 or later is needed for the checks, and Playwright for the ones that drive a
+browser (`gate.mjs`, `ambition.mjs`, `baseline.mjs`). The static detector `slop.mjs`
+needs neither.
 
 ```
 .claude-plugin/plugin.json     the manifest

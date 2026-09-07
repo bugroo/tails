@@ -40,11 +40,20 @@ line. Nothing is deleted.
 | `gsap-*` (core, timeline, scrolltrigger, utils, performance, plugins) | Phase 4 | **API reference.** `tails` decides *whether and why* something moves; these say *how it is written* |
 | `context7` | Phases 1 and 4 | Current vendor documentation at the checkpoints |
 
-Four of these are currently **off** on this machine (`core-web-vitals`,
-`fixing-accessibility`, `gsap-core`, `gsap-*`), switched off on 2026-09-06 to cut
-resident context from 47,6k to 26,6k tokens. That was a cost decision, not a quality
-one, and it needs revisiting: skills load **on demand**, so an off skill saves nothing
-at rest — it only removes the option.
+Several of these may already be **off** on a machine that has trimmed its resident
+context, and there is a real trade-off there rather than a free choice.
+
+**Correcting what this file said before:** it claimed an off skill "saves nothing at
+rest" because skills load on demand. That is wrong, and the machine this was written on
+disproves it: turning a group of skills off cut resident context from 47,6k to 26,6k
+tokens. A skill's *body* loads on demand, but its **name and description are resident**,
+because that is how the model knows the skill exists at all. Off is a real saving and a
+real loss at the same time.
+
+What follows from that is narrow: keep on the ones `tails` actually reaches for. If the
+`gsap-*` skills are off, phase 4 has no API reference to call and will fall back to
+training data for syntax, which is exactly the failure mode this project exists to
+avoid.
 
 ## Unaffected
 

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+  "name": "tails",
+  "description": "Design that does not read as generated: a design pass, deterministic detectors, one binary quality gate, and a Stop hook that will not let an unverified build close.",
+  "owner": { "name": "bugroo", "url": "https://github.com/bugroo" },
+  "plugins": [
+    {
+      "name": "tails",
+      "source": "./",
+      "description": "Design and build web interfaces that do not read as AI-generated. Six phases, thirteen reference files, three detectors, one verdict: APPROVED, NOT APPROVED, or COULD NOT LOOK.",
+      "version": "0.1.0",
+      "category": "design",
+      "author": { "name": "bugroo" },
+      "license": "MIT"
+    }
+  ]
+}
