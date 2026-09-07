@@ -1,6 +1,6 @@
 {
   "verdict": "APPROVED",
-  "at": "2026-09-07T21:00:08.793Z",
+  "at": "2026-09-07T21:02:07.211Z",
   "url": "http://localhost:4701/",
   "dir": ".",
   "tier": "craft",
@@ -8,6 +8,6 @@
   "budgetKB": 900,
   "copyChecked": true,
   "unmet": [],
-  "fingerprint": "40303ea2f66b20c5e00ebf2c5573726696a53ea70a4fbae37776186093b4561f",
+  "fingerprint": "ce62ad32a650eabd8bf95d33cfae16c5da6152ed193eabc565345987202c7a38",
   "note": "Written by checks/gate.mjs. The fingerprint covers every html, css and js file under dir. Editing any of them invalidates this verdict on purpose."
 }
