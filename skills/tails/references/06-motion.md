@@ -34,13 +34,25 @@ Measured on real sites, 2026-09-07 — transfer weight and first contentful pain
 | Site | Weight | JS | FCP |
 |---|---|---|---|
 | **obys.agency** | **59 KB** | 37 KB | 236 ms |
-| claveon.de | 269 KB | 47 KB | 336 ms |
 | garden-eight.com | 1 911 KB | — | 1 372 ms |
 | unseen.co | 7 137 KB | — | 472 ms |
 | basement.studio | 12 969 KB | 2 379 KB | 380 ms |
 | **resn.co.nz** | **23 620 KB** | 4 350 KB | 664 ms |
 
-**Two things fall out of this, and they point in opposite directions.**
+And two ordinary local-business sites, measured the same day with
+`checks/baseline.mjs`, for the contrast that actually matters:
+
+| Site | Weight | JS | FCP |
+|---|---|---|---|
+| filmkunstkinos.de/kinos/metropol | 4 696 KB | **3 538 KB** | **1 824 ms** |
+| filmkunstkinos-hannover.de | **8 706 KB** | 63 KB | 860 ms |
+
+A cinema shipping 3,5 MB of JavaScript to display a timetable, and another shipping
+8,7 MB of uncompressed stills. Neither buys anything with that weight. This is the
+common case, and it is the reason `checks/baseline.mjs` exists: measure the page you
+are proposing to replace, so the proposal carries a number instead of an opinion.
+
+**Two things fall out of the first table, and they point in opposite directions.**
 
 **The award-winning end of the field is heavy.** 13 MB and 23 MB are not typos. If the
 brief is a flagship campaign site on desktop over fibre, that is a choice somebody made
