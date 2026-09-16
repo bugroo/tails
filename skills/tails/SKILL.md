@@ -90,6 +90,16 @@ Everything below exists to keep you off the mean. Three mechanisms do the work:
    looking at your screenshots — the `paying-client` agent when this is installed as a
    plugin, the client themselves otherwise. Once, at the end. See `/tails-verdict`.
 
+11. **The read is approved before a single pixel exists.** Phase 2 ends with the person
+   who will judge the work saying yes to one line, not with you moving on. Eleven hero
+   rounds were rejected in a row on 2026-09-14 by someone who had never been asked to
+   approve the read, and who had never been asked for a reference URL. Both were
+   available for the price of one question. So: no build, redesign or hero round starts
+   without (a) at least one reference URL **from the person** (not from your search) and
+   (b) their explicit yes to the Design Read below, dials included. If either is
+   missing, ask, and build nothing until it arrives. A round built without them is not
+   a draft, it is the mean with a stamp on it.
+
 ---
 
 ## The pass
@@ -134,10 +144,18 @@ Short version, because it decides everything downstream:
 
 ### 2 · Direction — one sentence, out loud
 
-Before any code, state the read in one line:
+Before any code, state the read in one line **and wait for a yes** (non-negotiable 11):
 
 > *Reading this as: `<kind of site>` for `<audience>`, whose job is `<the task>`, at
-> `<position>` on the density axis, in a `<language>` register.*
+> `<position>` on the density axis, in a `<language>` register.
+> Dials: variance `<1-10>` · motion `<1-10>` · density `<1-10>`. Reference: `<their URL>`.
+> Direction in one sentence: `<…>`.*
+
+The three dials are levers the person can turn instead of rejecting results: variance
+(1 = perfect symmetry, 10 = deliberate chaos), motion (1 = static, 10 = cinematic),
+density (1 = gallery, 10 = cockpit). They come from the brief and the reference, never
+from a preset table; "surprise me" without a reference and without dials is not a
+brief, it is a request for the mean.
 
 **And declare the ambition tier, out loud, in the same breath:**
 
