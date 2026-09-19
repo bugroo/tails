@@ -30,6 +30,18 @@ fi
 RAIZ="${CLAUDE_PROJECT_DIR:-$PWD}"
 [ -d "$RAIZ" ] || exit 0
 
+# A session rooted at the home directory (or at /) is not inside any build:
+# it is an ops session that happens to have every project underneath it. From
+# there the search below walks the whole home tree (measured 2026-09-19: 32 s
+# per Stop, 14 stamped stylesheets found) and then blocks on builds that
+# belong to OTHER sessions, whose `--copy-checked` this one cannot attest.
+# Four sessions rooted at ~ were being asked, at every turn, to finish a page
+# that only one of them had ever seen. The gate belongs to the session that
+# works inside the project; run from a project root it behaves as before.
+case "$(cd "$RAIZ" && pwd -P)" in
+  "$(cd "$HOME" && pwd -P)"|/) exit 0 ;;
+esac
+
 # Where this plugin actually lives, so the instruction below names a path that
 # exists on the machine reading it. Installed from a marketplace the checks sit
 # in the plugin cache, not in the user's project, and "run node checks/gate.mjs"
