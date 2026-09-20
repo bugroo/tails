@@ -42,6 +42,7 @@ import { fileURLToPath } from 'node:url';
 import { createServer } from 'node:http';
 import { analizar, ficheros } from './slop.mjs';
 import { medirAmbicion, filasAmbicion, TIERS } from './ambition.mjs';
+import { medirEstructura, filasEstructura } from './structure.mjs';
 import { decodePNG, ratio } from './lib/png.mjs';
 
 const AQUI = dirname(fileURLToPath(import.meta.url));
@@ -544,6 +545,8 @@ export async function correr(o) {
 
     const amb = await medirAmbicion(page);
     const corriendoNormal = await page.evaluate(() => document.getAnimations().filter((x) => x.playState === 'running').length);
+    // composition is read on the same page, back at the top, at desktop width
+    const est = await medirEstructura(page);
     await ctx.close();
 
     const filasAmb = filasAmbicion(amb, o.tier);
@@ -552,6 +555,15 @@ export async function correr(o) {
       estado: malAmb.length ? 'fail' : 'pass',
       resumen: filasAmb.map(([w, ok, , skip]) => `${skip ? '·' : ok ? '✓' : '✗'} ${w.split(' —')[0].split(' (')[0]}`).join(' · '),
       detalle: malAmb.map(([w, , req]) => `${w} — needs ${req}`),
+    });
+
+    // ── 11 · composition: the shape a generator repeats ─────────────────────
+    const filasEst = filasEstructura(est);
+    const malEst = filasEst.filter(([, ok, , skip]) => !ok && !skip);
+    add('structure', 'composition at desktop width', {
+      estado: malEst.length ? 'fail' : 'pass',
+      resumen: filasEst.map(([w, ok, , skip]) => `${skip ? '·' : ok ? '✓' : '✗'} ${w.split(' ').slice(0, 2).join(' ')}`).join(' · '),
+      detalle: malEst.map(([w, , req]) => `${w} — needs ${req}`),
     });
 
     if (fatal) add('js', 'no JavaScript error on the page', { estado: 'fail', detalle: [fatal] });
@@ -712,7 +724,7 @@ async function selftest() {
     console.log('\npositive control · a build that must be refused');
     const malo = await correr({ url: `${base}/bad/`, dir: join(raiz, 'bad'), tier: 'standard',
       budget: 60, jsBudget: 20, prev: 'A1-B2-C1-D1-E1', copyChecked: false, anchos: [320, 375, 768, 1280] });
-    const debenFallar = ['slop', 'form', 'weight', 'ambition', 'contrast', 'widths', 'keyboard', 'reduced', 'copy'];
+    const debenFallar = ['slop', 'form', 'weight', 'ambition', 'structure', 'contrast', 'widths', 'keyboard', 'reduced', 'copy'];
     const fallaron = malo.filas.filter((f) => f.estado === 'fail').map((f) => f.id);
     const mudos = debenFallar.filter((d) => !fallaron.includes(d));
     if (mudos.length) {
@@ -722,7 +734,7 @@ async function selftest() {
         console.log(`      ${id}: ${f ? f.estado + ' — ' + (f.resumen || '') : 'missing'}`);
       });
       salida = 1;
-    } else console.log(`  ✓ all nine parameters fired: ${fallaron.join(', ')}`);
+    } else console.log(`  ✓ all ten parameters fired: ${fallaron.join(', ')}`);
 
     // ── and the third state: an instrument that cannot look ───────────────
     console.log('\nthird control · a page that cannot be read must exit 2, never 0');

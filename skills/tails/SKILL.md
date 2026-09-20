@@ -68,7 +68,7 @@ Everything below exists to keep you off the mean. Three mechanisms do the work:
    being built, so the path is `${CLAUDE_PLUGIN_ROOT}/checks/gate.mjs`. Run
    `/tails-verdict`, which resolves it for you.
 
-   Ten parameters, one verdict, three exit codes: `0` approved, `1` **NOT APPROVED**, `2`
+   Eleven parameters, one verdict, three exit codes: `0` approved, `1` **NOT APPROVED**, `2`
    **could not look**. NOT APPROVED is not a list of suggestions and it does not become a
    caveat in the handoff: it means the work is unfinished and the next step is to fix what
    it named, not to explain it. Exit 2 is not a pass either — an instrument that stopped
@@ -82,11 +82,11 @@ Everything below exists to keep you off the mean. Three mechanisms do the work:
    stamp. The stamp is a non-negotiable of § 3 and the receipt is the evidence that the
    work was done.
 
-10. **And APPROVED is still not the same as wanted.** The gate measures ten things and
+10. **And APPROVED is still not the same as wanted.** The gate measures eleven things and
    none of them is whether anyone would pay. A page can pin, layer, move, measure clean
    at every width and leave the person it was built for saying *"I did not really
    understand it, or what would appeal to the owner"*. That happened, to a build that
-   scored ten out of ten. So the last step is a person who has not seen your reasoning
+   scored ten out of ten, before composition was measured. So the last step is a person who has not seen your reasoning
    looking at your screenshots — the `paying-client` agent when this is installed as a
    plugin, the client themselves otherwise. Once, at the end. See `/tails-verdict`.
 
@@ -209,7 +209,7 @@ Load only what the build needs, when it needs it:
 | `references/04-typography.md` | Always. Type is where distinctiveness lives or dies |
 | `references/05-colour.md` | Always |
 | `references/06-motion.md` | Anything that moves. Budget, one clock, reduced-motion |
-| `references/07-stack.md` | Before naming a single library |
+| `references/07-stack.md` | Before naming a single library. Also the map from brief to an official design system, when there is one |
 | `references/08-collisions.md` | **The moment two layers touch the scroll.** Non-optional |
 | `references/09-copy.md` | Any text a human will read |
 
@@ -241,18 +241,19 @@ It folds everything this skill can measure into **one verdict**:
 
 | # | Parameter | What refusing it means |
 |---|---|---|
-| 1 | No slop in the source | The thirteen textual tells of `checks/slop.mjs` |
+| 1 | No slop in the source | The twenty-three tells of `checks/slop.mjs`, in the stylesheet and in the text |
 | 2 | Form stamped, and ≥ 3 axes from the last one | The diversification rule of § 3, enforced |
 | 3 | Weight within the **declared** budget | No budget declared is itself a failure |
 | 4 | Ambition met at the declared tier | Something pins, layers, moves — `06-motion.md` |
-| 5 | No JavaScript error on the page | |
-| 6 | Contrast **on the composited pixels** | Under the glyphs, over photographs, scrims included |
-| 7 | No overflow, 320 to 1280 | |
-| 8 | Keyboard path with visible, unobscured focus | WCAG 2.4.11 |
-| 9 | Reduced motion, measured in **both** directions | |
-| 10 | Nothing invented in the copy | The one it refuses to decide for you |
+| 5 | Composition at desktop width | The shape a generator repeats: an eyebrow over every heading, a nav that wraps, a hero that is a list, three image+text splits in a row, two marquees — `checks/structure.mjs` |
+| 6 | No JavaScript error on the page | |
+| 7 | Contrast **on the composited pixels** | Under the glyphs, over photographs, scrims included |
+| 8 | No overflow, 320 to 1280 | |
+| 9 | Keyboard path with visible, unobscured focus | WCAG 2.4.11 |
+| 10 | Reduced motion, measured in **both** directions | |
+| 11 | Nothing invented in the copy | The one it refuses to decide for you |
 
-**Number 10 is an attestation, not a measurement.** No code can read a claim and know
+**Number 11 is an attestation, not a measurement.** No code can read a claim and know
 whether it is true, so the gate will not pretend: without `--copy-checked` the verdict is
 NOT APPROVED, and passing that flag is you saying you checked every number, review,
 opening time and local detail against a source you can point at. A gate that quietly
@@ -270,7 +271,7 @@ only ever been seen passing is not a check:
   exactly like a real page.
 
 And the gate itself has both controls: `node checks/gate.mjs --selftest` runs a build that
-must be approved and a build that must be refused by all nine automatable parameters,
+must be approved and a build that must be refused by all ten automatable parameters,
 plus a page that cannot be read and must exit 2.
 
 **If it says NOT APPROVED, you are not finished.** Not "finished with caveats", not "good
@@ -280,7 +281,7 @@ enough for a first pass".
 
 **APPROVED means correct. It does not mean wanted.** Every parameter above can be met by
 a page nobody would pay for, and that is not a hypothetical: a cinema proposal built with
-this skill passed all ten and the first person to see it said he did not understand the
+this skill passed all ten there were at the time and the first person to see it said he did not understand the
 design or what would appeal to the owner. He was right, and no instrument in this
 repository disagreed with him, because none of them can.
 
@@ -308,6 +309,14 @@ and why, and what will break first if nobody maintains it.
 
 Same phases 0–2, then skip to the slop test and the verification pass. Report findings
 ranked by user impact, separate evidence from taste, and do not edit unless asked.
+
+## When you are redesigning something that exists
+
+**Load `references/13-redesign.md` before phase 0.** A redesign has a mode (preserve or
+overhaul), an audit that comes before any change, a list of things that never change
+without being asked (slugs, nav labels, form field names, the logo, legal copy), and one
+risk that outranks every visual one: search. The levers go in order of lift per unit of
+risk, and typography is first.
 
 ## When you are studying a reference
 
