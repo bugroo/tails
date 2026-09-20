@@ -65,8 +65,11 @@ Everything below exists to keep you off the mean. Three mechanisms do the work:
    ```
 
    Installed as a plugin the checks live in the plugin directory, not in the project
-   being built, so the path is `${CLAUDE_PLUGIN_ROOT}/checks/gate.mjs`. Run
-   `/tails-verdict`, which resolves it for you.
+   being built, so the path is `${CLAUDE_PLUGIN_ROOT}/checks/gate.mjs`. Installed as a
+   skill, by symlinking `skills/tails` from a clone of the repository into
+   `~/.claude/skills/`, they live in that clone: `~/tails/checks/gate.mjs`, with the Stop
+   hook registered in `settings.json` and `agents/paying-client.md` linked into
+   `~/.claude/agents/`. Either way, run `/tails-verdict`, which resolves it for you.
 
    Eleven parameters, one verdict, three exit codes: `0` approved, `1` **NOT APPROVED**, `2`
    **could not look**. NOT APPROVED is not a list of suggestions and it does not become a

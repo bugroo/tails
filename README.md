@@ -73,6 +73,27 @@ gate, the one reviewer, and the hook that enforces them.
 
 The repository is its own marketplace, so those two lines are the whole installation.
 
+**As a skill**, from a clone, when you want the copy you edit to be the copy that runs
+(a plugin is cached per version, needs `claude plugin update`, and each new cache starts
+without `node_modules`; measured 2026-09-20, three times in one day):
+
+```
+git clone https://github.com/bugroo/tails ~/tails
+ln -s ~/tails/skills/tails      ~/.claude/skills/tails
+ln -s ~/tails/agents/paying-client.md ~/.claude/agents/paying-client.md
+ln -s ~/tails/commands/tails-verdict.md ~/.claude/commands/tails-verdict.md
+```
+
+and the Stop hook in `~/.claude/settings.json`:
+
+```json
+{ "hooks": { "Stop": [ { "hooks": [ { "type": "command", "command": "$HOME/tails/hooks/stop-gate.sh" } ] } ] } }
+```
+
+The hook finds the checks next to itself; `/tails-verdict` assumes the clone at `~/tails`
+unless `CLAUDE_PLUGIN_ROOT` says otherwise. Playwright resolves from `~/tails/node_modules`
+(a symlink to a project that has it is enough). Do not install both ways at once.
+
 Node 18 or later is needed for the checks, and Playwright for the ones that drive a
 browser (`gate.mjs`, `ambition.mjs`, `structure.mjs`, `baseline.mjs`). The static detector `slop.mjs`
 needs neither.

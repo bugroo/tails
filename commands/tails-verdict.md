@@ -14,8 +14,12 @@ Run it in this order and stop at the first thing that fails.
 ## 1 · The gate decides first, because it costs nothing
 
 ```bash
-node ${CLAUDE_PLUGIN_ROOT}/checks/gate.mjs $ARGUMENTS --copy-checked
+node ${CLAUDE_PLUGIN_ROOT:-$HOME/tails}/checks/gate.mjs $ARGUMENTS --copy-checked
 ```
+
+`CLAUDE_PLUGIN_ROOT` is set when this runs as a plugin. Installed as a skill (a symlink
+into a clone of the repository) it is not, and the clone is assumed at `~/tails`; set
+the variable if it lives elsewhere.
 
 Pass `--expect=<some text only this page contains>`. Without it the gate cannot
 confirm it measured the page you meant, and a measurement of the wrong page
