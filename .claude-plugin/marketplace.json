@@ -7,8 +7,8 @@
     {
       "name": "tails",
       "source": "./",
-      "description": "Design and build web interfaces that do not read as AI-generated. Six phases, thirteen reference files, three detectors, one verdict: APPROVED, NOT APPROVED, or COULD NOT LOOK.",
-      "version": "0.1.0",
+      "description": "Design and build web interfaces that do not read as AI-generated. Six phases, fourteen reference files, four detectors, one verdict: APPROVED, NOT APPROVED, or COULD NOT LOOK.",
+      "version": "0.2.0",
       "category": "design",
       "author": { "name": "bugroo" },
       "license": "MIT"
