@@ -56,7 +56,7 @@ Three mechanisms, not three opinions:
   node checks/gate.mjs <url> --dir=<source> --tier=craft --budget=500 --copy-checked
   ```
 
-  Ten parameters, one verdict — `APPROVED`, `NOT APPROVED`, or `COULD NOT LOOK` — and the
+  Eleven parameters, one verdict — `APPROVED`, `NOT APPROVED`, or `COULD NOT LOOK` — and the
   third is not a pass. Contrast is measured on the composited pixels under the glyphs, so
   text on a photograph is judged against the photograph. The gate exercises itself against
   known answers on every run and has been seen going red under three deliberate mutations.
@@ -74,7 +74,7 @@ gate, the one reviewer, and the hook that enforces them.
 The repository is its own marketplace, so those two lines are the whole installation.
 
 Node 18 or later is needed for the checks, and Playwright for the ones that drive a
-browser (`gate.mjs`, `ambition.mjs`, `baseline.mjs`). The static detector `slop.mjs`
+browser (`gate.mjs`, `ambition.mjs`, `structure.mjs`, `baseline.mjs`). The static detector `slop.mjs`
 needs neither.
 
 ```
@@ -168,10 +168,11 @@ numbers. They are written into the files as rules, because catching them is the 
 
 ```
 skills/tails/SKILL.md          the pass: six phases, eight non-negotiables
-skills/tails/references/       thirteen files, loaded on demand
+skills/tails/references/       fourteen files, loaded on demand
 checks/gate.mjs                the single verdict · --selftest
 checks/slop.mjs                deterministic static detector · --selftest
 checks/ambition.mjs            what is MISSING from a correct page · CLI and importable
+checks/structure.mjs           the shape a generator repeats, counted · CLI and importable
 checks/lib/png.mjs             dependency-free PNG decoder, for reading real pixels
 checks/fixtures/               one build that must pass, one that must be refused
 lab/                           the bench: a real hero, built to be broken

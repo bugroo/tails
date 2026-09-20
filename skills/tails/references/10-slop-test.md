@@ -18,15 +18,16 @@ node checks/slop.mjs <file|dir>       # 0 clean · 1 findings · 2 could not loo
 node checks/slop.mjs --selftest       # prove the detector can still fail
 ```
 
-Thirteen rules, each with a reason attached:
+Twenty-three rules, each with a reason attached. Fourteen read the stylesheet, nine read
+the text a person reads (script and style bodies are stripped first):
 
 | Rule | Fires on |
 |---|---|
 | `default-face` | Inter, Roboto, Open Sans, Poppins, Lato in a `font-family` |
-| `indigo-gradient` | Indigo/violet gradients — the most recognisable tell there is |
+| `indigo-gradient` | Indigo/violet gradients, the most recognisable tell there is |
 | `gradient-text` | `background-clip: text` |
 | `card-stripe` | A side border of 3 px or more on a card |
-| `pure-black-white` | `#000` / `#fff` as a base *(skips blocks using `mix-blend-mode: difference`)* |
+| `cream-surface` | A warm cream background or surface token that nobody asked for (replaced `pure-black-white`: four of five award-winning sites use pure white and pure black) |
 | `transition-all` | `transition: all` |
 | `static-will-change` | `will-change` outside a hover/focus/animating state |
 | `viewport-unit-mobile` | `100vh` instead of `svh`/`dvh` |
@@ -34,8 +35,23 @@ Thirteen rules, each with a reason attached:
 | `untracked-display` | Type ≥ 48 px with no `letter-spacing` |
 | `italic-heading` | `font-style: italic` on a heading or hero title |
 | `focus-by-border` | Focus ring built from `border` instead of `outline` |
-| `emoji-as-icon` | An emoji opening a heading or list item |
+| `pulsing-halo` | A `@keyframes` whose `box-shadow` fades out to alpha 0: a halo that pulses |
+| `fake-window` | macOS traffic-light hexes: a product screenshot built out of divs |
 | `no-form-stamp` | No `tails · form:` stamp in the stylesheet |
+| `emoji-as-icon` | An emoji opening a heading or list item |
+| `em-dash` | An em-dash anywhere a person reads |
+| `numbered-eyebrow` | `001 · Capabilities`, `00 / INDEX`, `01 / 4` as labels |
+| `scroll-cue` | "Scroll", "↓ scroll to explore", "Scrollen" as a label |
+| `dot-strip` | Four or more values joined by middle dots on one line (a NAP line with two is not a strip) |
+| `version-stamp` | `v1.4.2`, `Build 0048`, "last sync" on a page that is not a devtool |
+| `locale-strip` | A clock and a temperature on the same line |
+| `quiet-trust` | "Quietly trusted by" |
+
+The nine text rules and the two new stylesheet rules came from Leonxlnx/taste-skill §9.F
+and §9.G (MIT, read 2026-09-20), kept only where a regular expression can decide. Before
+they went in they were pointed at claveon.de's build and at both samples: `dot-strip`
+started at three values and fired on every footer address line, so it moved to four;
+`em-dash` found three in the schnackertz sample, and those are real.
 
 **Exit code 2 exists on purpose.** "No files found" must never come back as "no problems
 found". A checker that reports success when it could not look is the single most common
@@ -43,10 +59,11 @@ way a green result means nothing.
 
 ### The self-test is not optional
 
-`--selftest` runs a deliberately awful fixture and a deliberately clean one:
+`--selftest` runs a deliberately awful fixture and a deliberately clean one, in CSS and
+then again in HTML for the text rules:
 
 ```
-positive control · bad fixture: 13 rules fired  ✓ every rule that should fire, fired
+positive control · bad fixture: 15 rules fired  ✓ every rule that should fire, fired
 negative control · good fixture: 0 rules fired  ✓ no false positives
 ```
 
@@ -109,30 +126,45 @@ note for later.
 3. Is every section the same shape as the one above it — heading, paragraph, three items?
 4. Is the hero everything centred on one vertical axis?
 5. Is there a numbered sequence over content that has no order?
+6. Is a product being shown as a screenshot that was built out of `<div>`s: a fake task
+   list, a fake terminal, a fake dashboard? Use a real capture, a real component, or
+   nothing.
+
+The machine now counts the rest of the shape in `checks/structure.mjs` (eyebrows per
+section, nav rows and height, wrapped buttons, hero stack, layout families, consecutive
+image+text splits, marquees). What it counts is the number; whether the number is right
+for this brief is still yours.
 
 ### Content
 
-6. Is there a claim, number, review, award or local detail that is not in a source you
+7. Is there a claim, number, review, award or local detail that is not in a source you
    can point at? **Delete it or ask.** No exceptions.
-7. Is any text placeholder that a reader would mistake for real?
-8. Would this copy work verbatim for a competitor?
-9. Does the CTA hide the outcome? "Get Started" says nothing; "See the showtimes" says
+8. Is any text placeholder that a reader would mistake for real?
+9. Would this copy work verbatim for a competitor?
+10. Does the CTA hide the outcome? "Get Started" says nothing; "See the showtimes" says
    what happens.
+11. Do two buttons on the page mean the same thing with different words ("Get in touch",
+    "Let's talk", "Start a project")? One intent, one label, everywhere it appears.
+12. Are there labels that perform craft instead of naming ("Field notes", "From the
+    bench", "Step 1 / Step 2 / Step 3", a photo credit under a stock image)? Plain
+    functional labels, or none.
+13. Is there a pill or tag laid over a photograph, or a sentence under a section label
+    explaining the section? The image speaks alone; the heading is enough.
 
 ### Craft
 
-10. Is the density position defensible from the task, or was it chosen by taste?
-11. Can every moving thing be defended as pacing, revealing or giving weight — rather
+14. Is the density position defensible from the task, or was it chosen by taste?
+15. Can every moving thing be defended as pacing, revealing or giving weight — rather
     than decorating?
-12. Is there decoration that could disappear without changing meaning, brand or
+16. Is there decoration that could disappear without changing meaning, brand or
     atmosphere?
-13. Does the colour carry information — category, state, action — or is it filling space?
-14. Is there anything here that exists because it was easy rather than because it was
+17. Does the colour carry information — category, state, action — or is it filling space?
+18. Is there anything here that exists because it was easy rather than because it was
     right?
 
 ### The one that catches what the others miss
 
-15. **Would somebody believe a person designed this?** If the honest answer is no, start
+19. **Would somebody believe a person designed this?** If the honest answer is no, start
     again. Not adjust — start again. Adjusting the average produces a tidier average.
 
 ---

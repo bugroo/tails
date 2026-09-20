@@ -21,7 +21,7 @@ node checks/gate.mjs <url> --dir=<source> --tier=craft \
 
 ```
 0  APPROVED
-1  NOT APPROVED   — and it lists exactly which of the ten parameters is unmet
+1  NOT APPROVED   — and it lists exactly which of the eleven parameters is unmet
 2  COULD NOT LOOK — an instrument did not see the page
 ```
 
@@ -33,16 +33,17 @@ When the gate cannot see, it refuses to grade rather than award a pass.
 
 | # | Parameter | Where it comes from |
 |---|---|---|
-| 1 | Static slop | `checks/slop.mjs`, thirteen rules |
+| 1 | Static slop | `checks/slop.mjs`, twenty-three rules |
 | 2 | Form stamped and ≥ 3 axes from the last | `03-form.md` |
 | 3 | Weight against the **declared** budget | `06-motion.md`. No budget declared is a failure in itself |
 | 4 | Ambition at the declared tier | `checks/ambition.mjs`, folded in, not re-implemented |
-| 5 | No JavaScript error | |
-| 6 | Contrast on the composited pixels | rule 8 and rule 9 below, automated |
-| 7 | No overflow 320–1280 | |
-| 8 | Keyboard path, visible and unobscured focus | WCAG 2.4.11 |
-| 9 | Reduced motion in **both** directions | rule 3 below |
-| 10 | Nothing invented in the copy | judgement — an explicit attestation, never a measurement |
+| 5 | Composition at desktop width | `checks/structure.mjs`, folded in: eyebrows per section, nav rows and height, wrapped buttons, hero stack, layout families, consecutive splits, marquees |
+| 6 | No JavaScript error | |
+| 7 | Contrast on the composited pixels | rule 8 and rule 9 below, automated |
+| 8 | No overflow 320–1280 | |
+| 9 | Keyboard path, visible and unobscured focus | WCAG 2.4.11 |
+| 10 | Reduced motion in **both** directions | rule 3 below |
+| 11 | Nothing invented in the copy | judgement — an explicit attestation, never a measurement |
 
 ## How the contrast number is actually obtained
 
@@ -69,7 +70,7 @@ element that nobody mentions is indistinguishable from a measured one that passe
 
 - a build that **must be approved** — a check that only fires on the bad case may be
   firing on everything;
-- a build that **must be refused by all nine automatable parameters**;
+- a build that **must be refused by all ten automatable parameters**;
 - a URL that **cannot be read**, which must exit 2 and not be graded.
 
 And on **every** run, not only in the self-test, the contrast checker measures two probes

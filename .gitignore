@@ -7,3 +7,7 @@ samples/*/assets/*.jpeg
 samples/*/assets/*.png
 samples/*/assets/*.webp
 docs/interno/
+
+# rompelo: contrato y evidencia locales de la máquina; obliga.json se versiona
+.rompelo/*
+!.rompelo/obliga.json

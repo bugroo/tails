@@ -159,12 +159,86 @@ const RULES = [
     test: (s) => grep(s, /<(h[1-6]|li|span|p)[^>]*>\s*[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu),
   },
   {
+    id: 'pulsing-halo',
+    scope: 'css',
+    why: 'A box-shadow that animates out to alpha 0 is a halo that pulses. It says "live" about something that is not.',
+    // Walk each @keyframes block by brace depth: a regex cannot see the end of
+    // a block that has blocks inside it.
+    test: (s) => {
+      const out = [];
+      const re = /@keyframes\s+([\w-]+)\s*\{/gi;
+      let m;
+      while ((m = re.exec(s))) {
+        let i = re.lastIndex, depth = 1;
+        while (i < s.length && depth) { if (s[i] === '{') depth++; else if (s[i] === '}') depth--; i++; }
+        const cuerpo = s.slice(re.lastIndex, i);
+        if (/box-shadow\s*:[^;}]*(rgba?\([^)]*,\s*0\s*\)|\/\s*0\s*\)|\btransparent\b|#[0-9a-f]{6}00\b)/i.test(cuerpo)) out.push(`@keyframes ${m[1]}`);
+      }
+      return out;
+    },
+  },
+  {
+    id: 'fake-window',
+    scope: 'css',
+    why: 'macOS traffic-light colours in a stylesheet mean a product screenshot built out of divs. Use a real capture or none.',
+    test: (s) => grep(s, /#(ff5f5[67]|ffbd2e|febc2e|27c93f|28c840|ff605c|ffbd44|00ca4e)\b/gi),
+  },
+  {
+    id: 'em-dash',
+    scope: 'html',
+    why: 'The em-dash is the written signature of generated text. A period, a comma or a colon does the job.',
+    test: (s) => grep(texto(s), /[^<>]{0,30}—[^<>]{0,30}/g),
+  },
+  {
+    id: 'numbered-eyebrow',
+    scope: 'html',
+    why: 'Section numbers as labels ("001 · Capabilities", "01 / 4") enumerate what the page already orders.',
+    test: (s) => grep(texto(s), />\s*0\d{1,2}\s*(?:[·/]\s*[A-Za-zÀ-ÿ][^<]{1,40}|\/\s*\d{1,2}\s*)</g),
+  },
+  {
+    id: 'scroll-cue',
+    scope: 'html',
+    why: 'A "scroll" label at the bottom of the hero tells the reader what a page is. They know.',
+    test: (s) => grep(texto(s), />\s*[↓⌄▾]?\s*(?:scroll|scrollen)(?:\s+(?:down|to\s+\w+|zum\s+\w+|[↓⌄▾]))?\s*</gi),
+  },
+  {
+    id: 'dot-strip',
+    scope: 'html',
+    why: 'Four or more values joined by middle dots in one line is a metadata strip, not a sentence. Columns, hairlines or line breaks.',
+    // Threshold measured on 2026-09-20: a footer NAP line ("ClaveON · Köln ·
+    // § 19 UStG", "Haus X · Straße 2 · 50733 Köln") carries two dots and is not
+    // a tell. Three dots is where the strip starts.
+    test: (s) => grep(texto(s), />[^<]*(?:\s·\s[^<]*){3}</g),
+  },
+  {
+    id: 'version-stamp',
+    scope: 'html',
+    why: 'Version numbers, build counters and "last sync" strings are devtool fixtures. On a marketing page they are decoration.',
+    test: (s) => grep(texto(s), />[^<]*\b(?:v\d+\.\d+(?:\.\d+)?(?:-[a-z0-9.]+)?|build\s+\d{3,}|last\s+sync)\b[^<]*</gi),
+  },
+  {
+    id: 'locale-strip',
+    scope: 'html',
+    why: 'A clock and a temperature in the header say "distributed studio". For nearly every brief it is atmosphere standing in for content.',
+    test: (s) => grep(texto(s), />[^<]*\b\d{1,2}:\d{2}\b[^<]*-?\d{1,2}\s*°[^<]*</g),
+  },
+  {
+    id: 'quiet-trust',
+    scope: 'html',
+    why: '"Quietly trusted by" is a phrase no company wrote about itself. "Trusted by", or let the logos speak.',
+    test: (s) => grep(texto(s), /quietly\s+(?:in\s+use|trusted|used)\b/gi),
+  },
+  {
     id: 'no-form-stamp',
     scope: 'css',
     why: 'No `tails · form:` stamp. Without it the next build cannot know what shape to avoid.',
     test: (s) => (/tails\s*·\s*form:/i.test(s) ? [] : ['stamp missing']),
   },
 ];
+
+// HTML rules read text nodes only. Script and style bodies are stripped first, so a
+// version string inside a bundle or a hex inside an inline stylesheet is not a finding.
+const texto = (s) => s.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, '');
 
 const grep = (s, re) => {
   const out = [];
@@ -208,6 +282,25 @@ const MALO = `
 .full { min-height: 100vh; }
 .btn:focus-visible { border: 2px solid blue; }
 h2 { font-style: italic; }
+@keyframes latido { 0% { box-shadow: 0 0 0 0 rgba(99,102,241,.6); } 100% { box-shadow: 0 0 0 12px rgba(99,102,241,0); } }
+.window .dot:nth-child(1) { background: #ff5f56; }
+`;
+const MALO_HTML = `
+<section><p class="eyebrow">001 · Capabilities</p><h2>What we do — and why</h2>
+<p>Lisbon 14:23 · 18°C</p><p>Quietly trusted by teams everywhere</p>
+<figure><span>01 / 4</span></figure>
+<p>Design · Build · Ship · Repeat</p>
+<a href="#next">↓ Scroll to explore</a>
+<footer>v1.4.2 · last sync 4s ago</footer></section>
+`;
+const BUENO_HTML = `
+<script>const build = "v1.4.2"; const t = "a — b";</script>
+<style>.x{color:#ff5f56}</style>
+<section><h2>Two rooms, one projector</h2>
+<p>Open Tuesday to Sunday, 14:00 to 23:00. Tickets from 9 € · seniors 7 €.</p>
+<p>Step 1 of the booking asks for a date; the second for a seat.</p>
+<p>Scroll-linked motion is used once, on the stage.</p>
+<a href="#top">Back to the top</a></section>
 `;
 const BUENO = `
 /* tails · form: A6-B4-C3-D2-E2 · density: dense · 2026-09-07 */
@@ -226,10 +319,18 @@ function selftest() {
   const bueno = analizar(BUENO, 'css');
   const esperados = ['default-face','indigo-gradient','gradient-text','card-stripe','cream-surface',
                      'transition-all','static-will-change','viewport-unit-mobile','loose-display',
-                     'italic-heading','focus-by-border','no-form-stamp'];
+                     'untracked-display','italic-heading','focus-by-border','no-form-stamp','pulsing-halo','fake-window'];
   const vistos = malo.map(h => h.id);
   const faltan = esperados.filter(e => !vistos.includes(e));
   const falsos = bueno.map(h => h.id);
+
+  // the HTML half: text tells, read from text nodes only
+  const maloHtml = analizar(MALO_HTML, 'html');
+  const buenoHtml = analizar(BUENO_HTML, 'html');
+  const esperadosHtml = ['em-dash','numbered-eyebrow','scroll-cue','dot-strip','version-stamp','locale-strip','quiet-trust'];
+  const vistosHtml = maloHtml.map(h => h.id);
+  faltan.push(...esperadosHtml.filter(e => !vistosHtml.includes(e)).map(e => `${e} (html)`));
+  falsos.push(...buenoHtml.map(h => `${h.id} (html)`));
 
   console.log(`positive control · bad fixture: ${vistos.length} rules fired`);
   if (faltan.length) console.log(`  ✗ DID NOT FIRE: ${faltan.join(', ')}`);

@@ -67,6 +67,42 @@ And whatever you pick, the phone that cannot run it still needs a page.
    the strongest typographic identity in the set. resn.co.nz ships **23,6 MB**. Both won
    awards. Weight is a decision, not a consequence.
 
+## When the brief names a system, use the system
+
+Some briefs are not an aesthetic to invent but a house to live in. A Shopify admin
+surface, a Jira-style product, a GOV.UK service, a Material-flavoured product: each has an
+official package with the tokens, the components and the accessibility work already done.
+Rebuilding its CSS by hand is not craft, it is a worse copy that drifts. The map, taken
+from Leonxlnx/taste-skill §2 (MIT, 2026-09-20) and checked against each package's own
+documentation on the day of use, never from memory:
+
+| The brief reads as… | Reach for | Docs |
+|---|---|---|
+| Microsoft / enterprise SaaS | `@fluentui/react-components` or `@fluentui/web-components` | react.fluentui.dev |
+| Material-flavoured product | `@material/web` + Material 3 tokens | github.com/material-components/material-web |
+| IBM-style B2B, dense analytics | `@carbon/react` + `@carbon/styles` | carbondesignsystem.com |
+| Shopify app surface | Polaris (web components or React) | shopify.dev/docs/api/app-home |
+| Atlassian / Jira-style | `@atlaskit/*` + `@atlaskit/tokens` | atlassian.design |
+| GitHub-style devtool or community page | `@primer/css`, `@primer/react-brand` for marketing | primer.style |
+| UK public service | `govuk-frontend` | design-system.service.gov.uk |
+| US public service | `uswds` | designsystem.digital.gov |
+| Fast local-business MVP that must simply work | Bootstrap 5.3 | getbootstrap.com |
+| Accessible React foundation you do not want to own | `@radix-ui/themes` | radix-ui.com |
+| Modern SaaS where you own every component | shadcn/ui, then never ship it in its default state | ui.shadcn.com |
+
+Three rules travel with the map:
+
+1. **One system per project.** Fluent next to Carbon, or shadcn inside a Material app, is
+   two houses with one door.
+2. **Do not import a system's tokens and then override ninety percent of them.** Either
+   the brief is that system or it is not; decide, and say which.
+3. **An aesthetic is not a system.** Glassmorphism, bento, brutalism, editorial, "Apple
+   liquid glass": none of these has an official package, and a web page that says it has
+   one is approximating. Build them in native CSS and say so in the stylesheet.
+
+Versions, install commands and what a package still supports are read from the package's
+page on the day, per the check above. Nothing in this table is a version.
+
 ## A vendor's own skill argues for that vendor
 
 If the machine you are working on has a library's official skill installed, read it for
